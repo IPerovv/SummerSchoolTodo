@@ -1,0 +1,34 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.TODOApplication" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="label_primary">@color/label_primary_light</item>
+        <item name="back_primary">@color/back_primary_light</item>
+        <!-- Secondary brand color. -->
+        <item name="label_secondary">@color/label_secondary_light</item>
+        <item name="back_secondary">@color/back_secondary_light</item>
+        <!-- Tertiary brand color. -->
+        <item name="label_tertiary">@color/label_tertiary_light</item>
+        <!-- Status bar color. - label_primary-->
+        <item name="android:statusBarColor">@color/back_primary_light</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Customize your theme here. -->
+        <item name="support_separator">@color/support_separator_light</item>
+        <item name="support_overlay">@color/support_overlay_light</item>
+
+        <item name="label_disable">@color/label_disable_light</item>
+
+        <item name="back_elevated">@color/back_primary_light</item>
+
+        <item name="color_red">@color/red</item>
+        <item name="color_green">@color/green</item>
+        <item name="color_blue">@color/blue</item>
+        <item name="color_gray">@color/gray</item>
+        <item name="color_gray_light">@color/gray_light_light</item>
+        <item name="color_white">@color/white</item>
+    </style>
+
+    <style name="Theme.MyApplication1.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MyApplication1.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

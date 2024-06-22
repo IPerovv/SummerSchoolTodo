@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp">
+
+    <CheckBox
+        android:id="@+id/todo_chb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        app:layout_constraintEnd_toStartOf="@id/todo_body_tv"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/todo_body_tv"
+        style="@style/Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        android:textColor="@color/label_primary_light"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@id/to_detailed_todo_bt"
+        app:layout_constraintStart_toEndOf="@id/todo_chb"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Купитьasffffffffffffffffffffasffffffffffff
+        ffffffffffadssssssssssssssssssssssssssffffffffffffffff
+        ffffffffffffffffffffffffasffffffffffffffffffffffffffff" />
+
+    <ImageView
+        android:id="@+id/to_detailed_todo_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="More info button"
+        android:paddingVertical="3dp"
+        android:paddingStart="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/todo_body_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/info_outline"
+        app:tint="@color/label_tertiary_light" />
+
+    <TextView
+        android:id="@+id/deadline_tv"
+        style="@style/Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/todo_body_tv"
+        app:layout_constraintTop_toBottomOf="@+id/todo_body_tv"
+        tools:text="16 июня 2020">
+
+    </TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
