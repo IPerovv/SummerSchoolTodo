@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_primary_light"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/Theme.MyApplication1.AppBarOverlay">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="@style/TODOToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/back_primary_light"
+            app:expandedTitleMarginBottom="55dp"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:title="Список дел"
+            app:toolbarId="@+id/all_todo_items_tb">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/all_todo_items_tb" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="8dp"
+                android:paddingBottom="20dp"
+                app:layout_collapseMode="parallax">
+
+                <TextView
+                    style="@style/Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Выполено - "
+                    android:textColor="@color/label_tertiary_light" />
+
+                <TextView
+                    android:id="@+id/made_todos_counter_tv"
+                    style="@style/Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/label_tertiary_light"
+                    tools:text="16" />
+
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/all_todo_items_tb"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="parallax"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:popupTheme="@style/Theme.MyApplication1.PopupOverlay">
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <CheckBox
+                android:id="@+id/visibility_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|end"
+                android:button="@drawable/property_1_visibility"
+                android:buttonTint="?color_blue"
+                android:checked="false" />
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/all_todo_items_sr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/all_todo_items_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:background="@color/back_secondary_light"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:context=".MainActivity"
+            tools:showIn="@layout/activity_main" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/all_todo_items_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/blue"
+        android:contentDescription="fab"
+        android:src="@drawable/baseline_add_24"
+        android:tint="@color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+

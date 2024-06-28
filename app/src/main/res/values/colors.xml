@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light theme colors -->
+
+    <color name="support_separator_light">#33000000</color>
+    <color name="support_overlay_light">#0F000000</color>
+
+    <color name="label_primary_light">#000000</color>
+    <color name="label_secondary_light">#99000000</color>
+    <color name="label_tertiary_light">#4D000000</color>
+    <color name="label_disable_light">#26000000</color>
+
+    <color name="back_primary_light">#F7F6F2</color>
+    <color name="back_secondary_light">#FFFFFFFF</color>
+    <color name="back_elevated_light">#FFFFFFFF</color>
+
+    <color name="gray_light_light">#D1D1D6</color>
+
+    <!-- Dark theme colors -->
+
+    <color name="support_separator_dark">#33FFFFFF</color>
+    <color name="support_overlay_dark">#52000000</color>
+
+    <color name="label_primary_dark">#FFFFFF</color>
+    <color name="label_secondary_dark">#99FFFFFF</color>
+    <color name="label_tertiary_dark">#66FFFFFF</color>
+    <color name="label_disable_dark">#26FFFFFF</color>
+
+    <color name="back_primary_dark">#161618</color>
+    <color name="back_secondary_dark">#252528</color>
+    <color name="back_elevated_dark">#3C3C3F</color>
+
+    <color name="gray_light_dark">#48484A</color>
+
+    <!-- Universal colors -->
+
+    <color name="red">#FF3B30</color>
+    <color name="yellow">#FFCC00</color>
+    <color name="green">#34C759</color>
+    <color name="blue">#007AFF</color>
+    <color name="gray">#8E8E93</color>
+    <color name="white">#FFFFFF</color>
+
+
+</resources>

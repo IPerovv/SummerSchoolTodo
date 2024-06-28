@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TODOApplication</string>
+    <string name="importance_basic">Нет</string>
+    <string name="importance_low">Низкая</string>
+    <string name="importance_high">!! Высокий</string>
+    <string name="importance_title">Важность</string>
+    <string name="edit_text_hint">Что надо сделать…</string>
+</resources>
