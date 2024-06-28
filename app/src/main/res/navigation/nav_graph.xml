@@ -5,7 +5,7 @@
     app:startDestination="@id/allTodoItemsFragment">
     <fragment
         android:id="@+id/allTodoItemsFragment"
-        android:name="com.example.todoapplication.after_reg.features.allTodoItems.AllTodoItemsFragment"
+        android:name="com.example.todoapplication.after_reg.features.todo.all.AllTodoItemsFragment"
         android:label="AllTodoItemsFragment">
         <action
             android:id="@+id/action_allTodoItemsFragment_to_detailedJobFragment"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedTodoItemFragment"
-        android:name="com.example.todoapplication.after_reg.features.DetailedTodoItem.DetailedTodoItemFragment"
+        android:name="com.example.todoapplication.after_reg.features.todo.detailed.DetailedTodoItemFragment"
         android:label="DetailedTodoItemFragment">
         <argument
             android:name="id"

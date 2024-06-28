@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.features.allTodoItems
+package com.example.todoapplication.after_reg.features.todo.all
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.databinding.FragmentAllTodoItemsBinding
+import com.google.android.material.snackbar.Snackbar
 
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -26,6 +27,16 @@ class AllTodoItemsFragment : Fragment() {
 
     private val allTodoItemsViewModel: AllTodoItemsViewModel by viewModels()
 
+    private val adapter by lazy {
+        JobAdapter { id ->
+            findNavController().navigate(
+                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
+                    id
+                )
+            )
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,65 +51,49 @@ class AllTodoItemsFragment : Fragment() {
 
         val controller = findNavController()
 
-        val adapter = JobAdapter(object : JobAdapter.OnClickListener {
-            override fun onClick(position: Int, todoItem: TodoItem) {
+        with(binding) {
+            madeTodosCounterTv.text = adapter.getCompletedCount().toString()
+
+            allTodoItemsRv.adapter = adapter
+
+            allTodoItemsSr.setOnRefreshListener {
+                allTodoItemsViewModel.loadAllTodoItems()
+                allTodoItemsSr.isRefreshing = false
+                madeTodosCounterTv.text = adapter.getCompletedCount().toString()
+            }
+
+            allTodoItemsFab.setOnClickListener {
                 controller.navigate(
                     AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
-                        todoItem.id
+                        null.toString()
                     )
                 )
             }
-        }
-        )
-
-        lifecycleScope.launch {
-            allTodoItemsViewModel.loadAllTodoItems()
-            binding.allTodoItemsSr.isRefreshing = false
-            binding.madeTodosCounterTv.text = adapter.getCompletedCount().toString()
-        }
-
-        binding.madeTodosCounterTv.text = adapter.getCompletedCount().toString()
-
-
-        binding.allTodoItemsRv.adapter = adapter
-
-        binding.allTodoItemsSr.setOnRefreshListener {
-            allTodoItemsViewModel.loadAllTodoItems()
-            binding.allTodoItemsSr.isRefreshing = false
-            binding.madeTodosCounterTv.text = adapter.getCompletedCount().toString()
         }
 
         allTodoItemsViewModel.state.onEach { result ->
             adapter.submitList(result.todoItemItems)
         }.launchInViewLifecycleScope()
 
+        //TODO: Переделать названия в навграфе
 
-        binding.allTodoItemsFab.setOnClickListener {
-            controller.navigate(
-                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
-                    null.toString()
-                )
-            )
-        }
-
-//        allJobsViewModel.eventFlow.onEach { event ->
-//            when (event) {
-//                is AllJobsViewModel.UIEvent.ShowSnackbar -> {
-//                    Snackbar.make(
-//                        binding.root,
-//                        event.message,
-//                        Snackbar.LENGTH_LONG
-//                    ).show()
-//                }
-//            }
-//        }.launchInViewLifecycleScope()
+        allTodoItemsViewModel.eventFlow.onEach { event ->
+            when (event) {
+                is AllTodoItemsViewModel.UIEvent.ShowSnackbar -> {
+                    Snackbar.make(
+                        binding.root,
+                        event.message,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }.launchInViewLifecycleScope()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
 
 context(Fragment)

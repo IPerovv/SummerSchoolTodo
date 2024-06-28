@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.features.allTodoItems
+package com.example.todoapplication.after_reg.features.todo.all
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,7 @@ import com.example.todoapplication.databinding.ItemTodoBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class JobAdapter(private val onClickListener: OnClickListener) :
+class JobAdapter(private val onClick: (String) -> Unit) :
     ListAdapter<TodoItem, JobAdapter.Holder>(createDefaultComparator()) {
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
@@ -28,9 +28,8 @@ class JobAdapter(private val onClickListener: OnClickListener) :
             } ?: run {
                 deadlineTv.visibility = View.GONE
             }
-
             binding.toDetailedTodoBt.setOnClickListener {
-                onClickListener.onClick(adapterPosition, todoItem)
+                onClick.invoke(todoItem.id)
             }
         }
     }
@@ -61,10 +60,6 @@ class JobAdapter(private val onClickListener: OnClickListener) :
                 }
             }
         }
-    }
-
-    interface OnClickListener {
-        fun onClick(position: Int, todoItem: TodoItem)
     }
 
     val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale("ru"))

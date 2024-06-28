@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.features.DetailedTodoItem
+package com.example.todoapplication.after_reg.features.todo.detailed
 
 import android.content.res.Resources
 import androidx.lifecycle.ViewModel
@@ -16,17 +16,17 @@ import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailedTodoItemViewModel @Inject constructor(
+open class DetailedTodoItemViewModel @Inject constructor(
     private val getTodoItemById: GetTodoItemById
 ) : ViewModel() {
 
-    private val _selectedImportance = MutableStateFlow<String>(" ")
+    val _selectedImportance = MutableStateFlow<String>(" ")
     val selectedImportance: MutableStateFlow<String> get() = _selectedImportance
 
-    private val _deadline = MutableStateFlow<String?>(" ")
+    val _deadline = MutableStateFlow<String?>(" ")
     val deadline: MutableStateFlow<String?> get() = _deadline
 
-    private val _todoBody = MutableStateFlow<String>(" ")
+    val _todoBody = MutableStateFlow<String>(" ")
     val todoBody: MutableStateFlow<String> get() = _todoBody
 
     private val _todoItem = MutableStateFlow<TodoItem?>(null)
@@ -63,14 +63,13 @@ class DetailedTodoItemViewModel @Inject constructor(
         _deadline.value = setDate(calendar.time)
     }
 
-    private fun setDate(date: Date?): String {
+    fun setDate(date: Date?): String {
         val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale("ru"))
         return when (date) {
             null -> " "
             else -> dateFormat.format(date)
         }
     }
-
 
     fun setupPopupMenu(menuItem: Int, resources: Resources) {
         when (menuItem) {
@@ -83,6 +82,8 @@ class DetailedTodoItemViewModel @Inject constructor(
             R.id.importance_high -> _selectedImportance.value =
                 resources.getString(setImportance(ImportanceLevel.IMPORTANT))
         }
-
+    }
+    fun updateTodoBody(body: String) {
+        _todoBody.value = body
     }
 }

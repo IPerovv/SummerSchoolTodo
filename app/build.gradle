@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.devtoolsKsp)
     alias(libs.plugins.googleDaggerHilt)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.compose.compiler)
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -38,6 +39,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 }
 
@@ -50,6 +55,9 @@ dependencies {
     implementation libs.androidx.core
     implementation libs.androidx.fragment.ktx
     implementation libs.androidx.fragment
+    implementation libs.compose.material2
+    implementation libs.compose.material3
+    implementation libs.compose.ui.tooling.preview
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
@@ -93,4 +101,18 @@ dependencies {
     implementation libs.kotlinx.serialization.json
     implementation libs.androidx.navigation.fragment.ktx
     implementation libs.androidx.navigation.ui.ktx
+
+    //Compose
+    implementation platform(libs.compose.bom)
+    androidTestImplementation platform(libs.compose.bom)
+
+    implementation libs.compose.material3
+    implementation libs.compose.material2
+    implementation libs.compose.foundation
+    implementation libs.androidx.foundation.layout
+
+    implementation libs.compose.ui
+
+    implementation libs.compose.ui.tooling.preview
+    debugImplementation libs.compose.ui.tooling
 }

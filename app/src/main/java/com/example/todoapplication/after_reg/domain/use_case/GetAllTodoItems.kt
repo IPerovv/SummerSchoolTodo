@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class GetTodoItems @Inject constructor(
+class GetAllTodoItems @Inject constructor(
     private val repository: TodoItemsRepository
 ) {
     operator fun invoke(): Flow<Resource<List<TodoItem>>> {
         return repository.getAllTodoItems().flowOn(Dispatchers.IO)
     }
 }
-//перенести во view model
+//TODO: перенести во view model

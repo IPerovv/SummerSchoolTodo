@@ -2,7 +2,10 @@
     <string name="app_name">TODOApplication</string>
     <string name="importance_basic">Нет</string>
     <string name="importance_low">Низкая</string>
-    <string name="importance_high">!! Высокий</string>
+    <string name="importance_high">!! Высокая</string>
     <string name="importance_title">Важность</string>
-    <string name="edit_text_hint">Что надо сделать…</string>
+    <string name="save">save\n</string>
+    <string name="edit_text_hint">Что нужно сделать...</string>
+    <string name="make_up_to">Сделать до</string>
+    <string name="delete">Удалить\n</string>
 </resources>

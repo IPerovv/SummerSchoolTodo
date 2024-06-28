@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.features.DetailedTodoItem
+package com.example.todoapplication.after_reg.features.todo.detailed
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -49,23 +49,18 @@ class DetailedTodoItemFragment : Fragment() {
             detailedTodoItemViewModel.setUpInfo(args.id, resources)
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            detailedTodoItemViewModel.selectedImportance.collect { importance ->
-                binding.subtitle.text = importance
-            }
+        detailedTodoItemViewModel.selectedImportance.collectInViewLifecycleScope { importance ->
+            binding.subtitle.text = importance
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            detailedTodoItemViewModel.deadline.collect { date ->
-                binding.dateSwitch.isChecked = date != " "
-                binding.showDateTv.text = date.toString()
-            }
+        detailedTodoItemViewModel.deadline.collectInViewLifecycleScope { date ->
+            binding.dateSwitch.isChecked = date != " "
+            binding.showDateTv.text = date.toString()
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            detailedTodoItemViewModel.todoBody.collect { text ->
-                binding.editText.text = Editable.Factory.getInstance().newEditable(text)
-            }
+
+        detailedTodoItemViewModel.todoBody.collectInViewLifecycleScope { text ->
+            binding.editText.text = Editable.Factory.getInstance().newEditable(text)
         }
 
 
@@ -89,10 +84,11 @@ class DetailedTodoItemFragment : Fragment() {
             findNavController().popBackStack() //TODO:  переделеать под удаление объекта
         }
 
-
-
         binding.dateSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                if (binding.showDateTv.text == " ") {
+                    showDatePicker()
+                }
                 binding.dateBlock.setOnClickListener {
                     showDatePicker()
                 }
@@ -132,15 +128,19 @@ class DetailedTodoItemFragment : Fragment() {
     }
 
 
-    private fun clearFocusTv(context: Context, view: View?){
+//    private fun clearFocusTv(context: Context, view: View?){
 //        val imm =
 //            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
 //        imm.hideSoftInputFromWindow(view?.windowToken,0)
-        //TODO: Закрывать клавиатуру при нажатии на кнопку или в любое другое место кроме ET
-    }
+//        //TODO: Закрывать клавиатуру при нажатии на кнопку или в любое другое место кроме ET
+//    }
 }
 
 context(Fragment)
-fun <T> Flow<T>.launchInViewLifecycleScope(): Job {
-    return launchIn(viewLifecycleOwner.lifecycleScope)
+fun <T> Flow<T>.collectInViewLifecycleScope(action: suspend (T) -> Unit): Job {
+    return viewLifecycleOwner.lifecycleScope.launch {
+        collect { value ->
+            action(value)
+        }
+    }
 }
