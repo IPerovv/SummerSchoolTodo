@@ -2,10 +2,6 @@ package com.example.todoapplication.after_reg.features.todo.detailed.compose
 
 import android.app.DatePickerDialog
 import android.content.Context
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,25 +23,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.todoapplication.R
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
 import com.example.todoapplication.after_reg.features.todo.detailed.DetailedTodoItemViewModel
 import com.example.todoapplication.core.util.AppTheme
 import com.example.todoapplication.core.util.ExtendedTheme
-import dagger.hilt.android.AndroidEntryPoint
-import java.lang.StringBuilder
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -368,9 +355,6 @@ fun DeleteSection(onDelete: () -> Unit) {
         Text("Удалить", color = Color.Red)
     }
 }
-
-
-
 
 
 
