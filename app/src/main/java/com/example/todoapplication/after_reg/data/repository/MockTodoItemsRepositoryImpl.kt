@@ -7,9 +7,11 @@ import com.example.todoapplication.after_reg.data.mock.MockTodoApi
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.core.util.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
@@ -40,7 +42,7 @@ class MockTodoItemsRepositoryImpl(
             }
             emit(Resource.Success(newTodoItems))
         }.getOrNull()
-    }
+    }.flowOn(Dispatchers.IO)
 
     //exception handler corutines + getOrThrow
     override fun addTodoItem(todoItem: TodoItemEntity) {
@@ -54,7 +56,7 @@ class MockTodoItemsRepositoryImpl(
     }
 
     override fun updateTodoItem(todoItem: TodoItemEntity) {
-
+            TODO()
     }
 
     override fun deleteTodoItem(todoItem: TodoItemEntity) {

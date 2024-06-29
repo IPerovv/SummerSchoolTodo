@@ -30,7 +30,8 @@ class AllTodoItemsFragment : Fragment() {
     private val adapter by lazy {
         JobAdapter { id ->
             findNavController().navigate(
-                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
+                //AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
+                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(
                     id
                 )
             )
@@ -64,7 +65,8 @@ class AllTodoItemsFragment : Fragment() {
 
             allTodoItemsFab.setOnClickListener {
                 controller.navigate(
-                    AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
+                    //AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
+                    AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(
                         null.toString()
                     )
                 )

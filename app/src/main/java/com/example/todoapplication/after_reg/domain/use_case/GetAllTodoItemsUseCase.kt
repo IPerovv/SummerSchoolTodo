@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class GetAllTodoItems @Inject constructor(
+class GetAllTodoItemsUseCase @Inject constructor(
     private val repository: TodoItemsRepository
 ) {
     operator fun invoke(): Flow<Resource<List<TodoItem>>> {

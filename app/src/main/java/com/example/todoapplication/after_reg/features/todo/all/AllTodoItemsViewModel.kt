@@ -3,7 +3,7 @@ package com.example.todoapplication.after_reg.features.todo.all
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapplication.core.util.Resource
-import com.example.todoapplication.after_reg.domain.use_case.GetAllTodoItems
+import com.example.todoapplication.after_reg.domain.use_case.GetAllTodoItemsUseCase
 import com.example.todoapplication.after_reg.presentation.TodoItemState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AllTodoItemsViewModel @Inject constructor(
-    private val getAllTodoItems: GetAllTodoItems
+    private val getAllTodoItemsUseCase: GetAllTodoItemsUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TodoItemState())
@@ -33,7 +33,7 @@ class AllTodoItemsViewModel @Inject constructor(
 
     fun loadAllTodoItems() {
         viewModelScope.launch(Dispatchers.IO) {
-            getAllTodoItems().collect { result ->
+            getAllTodoItemsUseCase().collect { result ->
                 when (result) {
                     is Resource.Success -> {
                         _state.value = state.value.copy(

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back_primary_light"
+    android:background="?back_primary"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,8 +18,9 @@
             style="@style/TODOToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?back_primary"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/back_primary_light"
+            app:collapsedTitleTextColor="?label_primary"
             app:expandedTitleMarginBottom="55dp"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             app:title="Список дел"
@@ -45,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Выполено - "
-                    android:textColor="@color/label_tertiary_light" />
+                    android:textColor="?label_tertiary" />
 
                 <TextView
                     android:id="@+id/made_todos_counter_tv"
@@ -98,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:background="@color/back_secondary_light"
+            android:background="?back_secondary"
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:context=".MainActivity"
@@ -113,7 +114,7 @@
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="?color_blue"
         android:contentDescription="fab"
         android:src="@drawable/baseline_add_24"
         android:tint="@color/white" />

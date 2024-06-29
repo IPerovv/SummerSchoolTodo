@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Item_todo"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,7 +27,7 @@
         android:maxLines="3"
         android:paddingHorizontal="12dp"
         android:paddingVertical="4dp"
-        android:textColor="@color/label_primary_light"
+        android:textColor="?label_primary"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@id/to_detailed_todo_bt"
         app:layout_constraintStart_toEndOf="@id/todo_chb"
@@ -46,7 +47,7 @@
         app:layout_constraintStart_toEndOf="@id/todo_body_tv"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/info_outline"
-        app:tint="@color/label_tertiary_light" />
+        app:tint="?label_tertiary" />
 
     <TextView
         android:id="@+id/deadline_tv"

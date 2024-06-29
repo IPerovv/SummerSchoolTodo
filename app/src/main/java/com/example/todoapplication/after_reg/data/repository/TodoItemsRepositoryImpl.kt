@@ -7,9 +7,11 @@ import com.example.todoapplication.after_reg.data.local.entity.TodoItemEntity
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import retrofit2.HttpException

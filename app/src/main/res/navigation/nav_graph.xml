@@ -8,17 +8,17 @@
         android:name="com.example.todoapplication.after_reg.features.todo.all.AllTodoItemsFragment"
         android:label="AllTodoItemsFragment">
         <action
-            android:id="@+id/action_allTodoItemsFragment_to_detailedJobFragment"
-            app:destination="@id/detailedTodoItemFragment" />
-
+            android:id="@+id/action_allTodoItemsFragment_to_composeDetailedTodoItemFragment"
+            app:destination="@id/composeDetailedTodoItemFragment" />
     </fragment>
     <fragment
-        android:id="@+id/detailedTodoItemFragment"
-        android:name="com.example.todoapplication.after_reg.features.todo.detailed.DetailedTodoItemFragment"
-        android:label="DetailedTodoItemFragment">
+        android:id="@+id/composeDetailedTodoItemFragment"
+        android:name="com.example.todoapplication.after_reg.features.todo.detailed.compose.ComposeDetailedTodoItemFragment"
+        android:label="ComposeDetailedTodoItemFragment" >
         <argument
             android:name="id"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

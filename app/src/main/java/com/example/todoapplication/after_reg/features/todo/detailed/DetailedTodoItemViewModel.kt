@@ -1,11 +1,9 @@
 package com.example.todoapplication.after_reg.features.todo.detailed
 
-import android.content.res.Resources
 import androidx.lifecycle.ViewModel
-import com.example.todoapplication.R
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
 import com.example.todoapplication.after_reg.domain.model.TodoItem
-import com.example.todoapplication.after_reg.domain.use_case.GetTodoItemById
+import com.example.todoapplication.after_reg.domain.use_case.GetTodoItemByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,44 +14,39 @@ import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-open class DetailedTodoItemViewModel @Inject constructor(
-    private val getTodoItemById: GetTodoItemById
+class DetailedTodoItemViewModel @Inject constructor(
+    private val getTodoItemByIdUseCase: GetTodoItemByIdUseCase
 ) : ViewModel() {
 
-    val _selectedImportance = MutableStateFlow<String>(" ")
+    private val _selectedImportance = MutableStateFlow(" ")
     val selectedImportance: MutableStateFlow<String> get() = _selectedImportance
 
-    val _deadline = MutableStateFlow<String?>(" ")
+    private val _deadline = MutableStateFlow<String?>(" ")
     val deadline: MutableStateFlow<String?> get() = _deadline
 
-    val _todoBody = MutableStateFlow<String>(" ")
+    private val _todoBody = MutableStateFlow(" ")
     val todoBody: MutableStateFlow<String> get() = _todoBody
 
     private val _todoItem = MutableStateFlow<TodoItem?>(null)
     val todoItem: StateFlow<TodoItem?> get() = _todoItem //TODO: для последующего сохранения данных
 
 
-    suspend fun setUpInfo(id: String?, resources: Resources) {
+    suspend fun setUpInfo(id: String?) {
         if (id != "null") {
-            _todoItem.value = getTodoItemById(id!!)
-            _selectedImportance.value =
-                resources.getString(setImportance(_todoItem.value!!.importance))
+            _todoItem.value = getTodoItemByIdUseCase(id!!)
+            _selectedImportance.value = _todoItem.value!!.importance.name.lowercase()
             _deadline.value = setDate(_todoItem.value!!.deadline)
             _todoBody.value = _todoItem.value!!.todo
         } else {
             _selectedImportance.value =
-                resources.getString(setImportance(ImportanceLevel.BASIC))
+                ImportanceLevel.BASIC.name.lowercase()
             _deadline.value = setDate(null)
             _todoBody.value = ""
         }
     }
 
-    private fun setImportance(importance: ImportanceLevel): Int {
-        return when (importance) {
-            ImportanceLevel.LOW -> R.string.importance_low
-            ImportanceLevel.BASIC -> R.string.importance_basic
-            ImportanceLevel.IMPORTANT -> R.string.importance_high
-        }
+    fun setImportance(importance: ImportanceLevel) {
+        _selectedImportance.value = importance.name.lowercase()
     }
 
     fun setNewDate(year: Int, month: Int, dayOfMonth: Int) {
@@ -71,18 +64,7 @@ open class DetailedTodoItemViewModel @Inject constructor(
         }
     }
 
-    fun setupPopupMenu(menuItem: Int, resources: Resources) {
-        when (menuItem) {
-            R.id.importance_low -> _selectedImportance.value =
-                resources.getString(setImportance(ImportanceLevel.LOW))
 
-            R.id.importance_basic -> _selectedImportance.value =
-                resources.getString(setImportance(ImportanceLevel.BASIC))
-
-            R.id.importance_high -> _selectedImportance.value =
-                resources.getString(setImportance(ImportanceLevel.IMPORTANT))
-        }
-    }
     fun updateTodoBody(body: String) {
         _todoBody.value = body
     }
