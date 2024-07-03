@@ -25,7 +25,7 @@ class DetailedTodoItemViewModel @Inject constructor(
     val deadline: MutableStateFlow<String?> get() = _deadline
 
     private val _todoBody = MutableStateFlow(" ")
-    val todoBody: MutableStateFlow<String> get() = _todoBody
+    val todoBody: StateFlow<String> get() = _todoBody
 
     private val _todoItem = MutableStateFlow<TodoItem?>(null)
     val todoItem: StateFlow<TodoItem?> get() = _todoItem //TODO: для последующего сохранения данных
@@ -39,7 +39,7 @@ class DetailedTodoItemViewModel @Inject constructor(
             _todoBody.value = _todoItem.value!!.todo
         } else {
             _selectedImportance.value =
-                ImportanceLevel.BASIC.name.lowercase()
+                ImportanceLevel.basic.name.lowercase()
             _deadline.value = setDate(null)
             _todoBody.value = ""
         }

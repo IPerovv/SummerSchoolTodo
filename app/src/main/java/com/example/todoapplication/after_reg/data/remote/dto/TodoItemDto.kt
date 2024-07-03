@@ -6,16 +6,24 @@ import java.util.Date
 
 data class TodoItemDto(
     val id: String,
-    val todo: String,
+    val text: String,
     val importance: ImportanceLevel,
-    val completed: Boolean,
-    val creationDate: Date,
-    val modificationDate : Date,
-    val deadline: Date? = null
+    val deadline: Long? = null,
+    val done: Boolean,
+    val color: String? = null,
+    val creationDate: Long,
+    val modificationDate: Long,
+    val lastUpdatedBy: String
 ) {
     fun toJobEntity(): TodoItemEntity {
         return TodoItemEntity(
-            id, todo, importance, completed, creationDate, modificationDate, deadline
+            id = id,
+            text = text,
+            importance = importance,
+            done = done,
+            creationDate = Date(creationDate * 1000),
+            modificationDate = Date(creationDate * 1000),
+            deadline = Date(creationDate * 1000)
         )
     }
 }

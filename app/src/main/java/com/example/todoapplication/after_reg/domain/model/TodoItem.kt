@@ -12,9 +12,8 @@ data class TodoItem(
     val modificationDate : Date,
     val deadline: Date?
 )
-
 enum class ImportanceLevel {
-    LOW,
-    BASIC,
-    IMPORTANT,
+    low,
+    basic,
+    important,
 }

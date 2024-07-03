@@ -25,11 +25,12 @@ class MockTodoItemsRepositoryImpl(
         val todoItems: List<TodoItem> = runBlocking {
             dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }.first()
         }
+
         emit(Resource.Loading(todoItems))
 
         runCatching {
             val mockTodo = mock.getAllTodoItems()
-            dao.updateDatabase(mockTodo.todos.map { it.toJobEntity() })
+            dao.updateDatabase(mockTodo.list.map { it.toJobEntity() })
 
         }.onFailure {
             Resource.Error(
@@ -65,7 +66,7 @@ class MockTodoItemsRepositoryImpl(
         }.onFailure {
             TODO("Изменить тип возвращаемого объекта")
         }.onSuccess {
-            Log.i("repImpl", "{ \" ${todoItem.todo} \" was deleted}")
+            Log.i("repImpl", "{ \" ${todoItem.text} \" was deleted}")
         }.getOrNull()
     }
 

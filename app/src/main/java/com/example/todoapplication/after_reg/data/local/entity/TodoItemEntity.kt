@@ -12,11 +12,11 @@ data class TodoItemEntity(
     @ColumnInfo(name = "id")
     @PrimaryKey val id: String,
     @ColumnInfo(name = "job_title")
-    val todo: String,
+    val text: String,
     @ColumnInfo("importance_level")
     val importance: ImportanceLevel,
     @ColumnInfo("completed_bool")
-    val completed: Boolean,
+    val done: Boolean,
     @ColumnInfo("creation_date")
     val creationDate: Date,
     @ColumnInfo("modification_date")
@@ -26,7 +26,7 @@ data class TodoItemEntity(
 ) {
     fun toTodoItem(): TodoItem {
         return TodoItem(
-            id, todo, importance, completed, creationDate, modificationDate, deadline
+            id, text, importance, done, creationDate, modificationDate, deadline
         )
     }
 }

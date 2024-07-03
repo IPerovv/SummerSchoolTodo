@@ -1,9 +1,9 @@
-package com.example.todoapplication.after_reg.data.local
+package com.example.todoapplication.after_reg.data.local.converters
 
 import androidx.room.TypeConverter
 import java.util.Date
 
-class DataConverters {
+class DateConverter {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return value?.let { Date(it) }

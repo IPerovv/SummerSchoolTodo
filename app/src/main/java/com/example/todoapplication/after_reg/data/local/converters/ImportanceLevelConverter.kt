@@ -1,7 +1,9 @@
-package com.example.todoapplication.after_reg.data.local
+package com.example.todoapplication.after_reg.data.local.converters
 
+import androidx.compose.ui.text.toUpperCase
 import androidx.room.TypeConverter
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
+import java.util.Locale
 
 class ImportanceLevelConverter {
     @TypeConverter

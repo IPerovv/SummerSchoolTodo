@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import com.example.todoapplication.R
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
 import com.example.todoapplication.after_reg.features.todo.detailed.DetailedTodoItemViewModel
-import com.example.todoapplication.core.util.AppTheme
-import com.example.todoapplication.core.util.ExtendedTheme
+import com.example.todoapplication.core.ui.AppTheme
+import com.example.todoapplication.core.ui.ExtendedTheme
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -311,10 +311,10 @@ private fun ChoiceImportantTask(
                                 onClick = {
                                     viewModel.setImportance(
                                         when (index) {
-                                            0 -> ImportanceLevel.LOW
-                                            1 -> ImportanceLevel.BASIC
-                                            2 -> ImportanceLevel.IMPORTANT
-                                            else -> ImportanceLevel.BASIC
+                                            0 -> ImportanceLevel.low
+                                            1 -> ImportanceLevel.basic
+                                            2 -> ImportanceLevel.important
+                                            else -> ImportanceLevel.basic
                                         }
                                     )
                                     expanded = false
@@ -355,6 +355,7 @@ fun DeleteSection(onDelete: () -> Unit) {
         Text("Удалить", color = Color.Red)
     }
 }
+
 
 
 

@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapplication.after_reg.features.todo.detailed.DetailedTodoItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ComposeDetailedTodoItemFragment : Fragment() {
@@ -26,8 +29,10 @@ class ComposeDetailedTodoItemFragment : Fragment() {
 
         val todoItemId = args.id.toString()
 
-        lifecycleScope.launchWhenStarted {
-            detailedTodoItemViewModel.setUpInfo(todoItemId)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                detailedTodoItemViewModel.setUpInfo(todoItemId)
+            }
         }
 
         return ComposeView(requireContext()).apply {

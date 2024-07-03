@@ -4,14 +4,13 @@ import android.util.Log
 import com.example.todoapplication.core.util.Resource
 import com.example.todoapplication.after_reg.data.local.TodoItemsDao
 import com.example.todoapplication.after_reg.data.local.entity.TodoItemEntity
+import com.example.todoapplication.after_reg.data.remote.PreferencesManager
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import retrofit2.HttpException
@@ -19,50 +18,56 @@ import java.io.IOException
 
 class TodoItemsRepositoryImpl(
     private val api: TodoItemsApi,
-    private val dao: TodoItemsDao
+    private val dao: TodoItemsDao,
+    private val preferencesManager: PreferencesManager,
 ) : TodoItemsRepository {
 
     override fun getAllTodoItems(): Flow<Resource<List<TodoItem>>> = flow {
         emit(Resource.Loading())
 
-        val todoItems = dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }
-        val unwrappedTodoItems: List<TodoItem> = runBlocking { todoItems.first() }
+        val todoItems: List<TodoItem> = runBlocking {
+            dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }.first()
+        }
 
-        emit(Resource.Loading(unwrappedTodoItems))
+        emit(Resource.Loading(todoItems))
 
         runCatching {
             val remoteTodoItems = api.getAllTodoItems()
-            dao.updateDatabase(remoteTodoItems.todos.map { it.toJobEntity() })
+
+            dao.clearTodos()
+            dao.updateDatabase(remoteTodoItems.list.map { it.toJobEntity() })
+            preferencesManager.updateCurrentRevision(remoteTodoItems.revision)
 
         }.onFailure {
             when (it) {
                 is HttpException -> emit(
                     Resource.Error(
                         message = "Oops, something went wrong!",
-                        data = unwrappedTodoItems
+                        data = todoItems
                     )
                 )
 
                 is IOException -> emit(
                     Resource.Error(
                         message = "Couldn't reach server, check your internet connection.",
-                        data = unwrappedTodoItems
+                        data = todoItems
                     )
                 )
 
                 else -> emit(
                     Resource.Error(
                         message = it.message.toString(),
-                        data = unwrappedTodoItems
+                        data = todoItems
                     )
                 )
             }
         }.onSuccess {
-            val newJobs = dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }
-            val newUnwrappedTodoItems: List<TodoItem> = runBlocking { newJobs.first() }
-            emit(Resource.Success(newUnwrappedTodoItems))
-        }
+            val newTodos: List<TodoItem> = runBlocking {
+                dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }.first()
+            }
 
+            emit(Resource.Success(newTodos))
+        }
     }
 
     //TODO
@@ -91,7 +96,7 @@ class TodoItemsRepositoryImpl(
         } catch (e: IOException) {
             Log.e("RepImpl", "Couldn't reach server")
         }
-        Log.i("repImpl", "{ \" ${todoItem.todo} \" was deleted}")
+        Log.i("repImpl", "{ \" ${todoItem.text} \" was deleted}")
     }
 
     override suspend fun getTodoItemById(id: String): TodoItem {

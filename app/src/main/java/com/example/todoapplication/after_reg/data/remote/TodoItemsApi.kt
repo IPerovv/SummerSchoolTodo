@@ -9,19 +9,15 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface TodoItemsApi {
-    @GET("todos")
+    @GET("list")
     suspend fun getAllTodoItems(): ResponseDto
 
-    @POST("todos/add")
+    @POST("list/add")
     suspend fun addTodoItem(job: TodoItemEntity)
 
-    @PUT("todos/{id}")
+    @PUT("list/{id}")
     suspend fun updateTodoItem(@Path("id") jobId: Int, job: TodoItemEntity)
 
-    @DELETE("todos/{id}") //TODO
+    @DELETE("list/{id}") //TODO
     suspend fun deleteTodoItem(@Path("id") jobId: Int)
-
-    companion object {
-        const val BASE_URL = "https://dummyjson.com/"
-    }
 }
