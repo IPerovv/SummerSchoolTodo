@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.features.todo.detailed
+package com.example.todoapplication.after_reg.features.todo.detailed.view
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -14,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapplication.R
-import com.example.todoapplication.databinding.FragmentDetailedTodoItemBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow

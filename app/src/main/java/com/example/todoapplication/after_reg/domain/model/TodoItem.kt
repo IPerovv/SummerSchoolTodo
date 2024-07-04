@@ -9,11 +9,11 @@ data class TodoItem(
     val importance: ImportanceLevel,
     val completed: Boolean,
     val creationDate: Date,
-    val modificationDate : Date,
+    val modificationDate : Date?,
     val deadline: Date?
 )
 enum class ImportanceLevel {
-    low,
-    basic,
-    important,
+    LOW,
+    BASIC,
+    IMPORTANT,
 }

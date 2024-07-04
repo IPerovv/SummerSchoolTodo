@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.features.todo.detailed.compose
+package com.example.todoapplication.after_reg.features.todo.detailed
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -30,7 +30,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.example.todoapplication.R
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
-import com.example.todoapplication.after_reg.features.todo.detailed.DetailedTodoItemViewModel
 import com.example.todoapplication.core.ui.AppTheme
 import com.example.todoapplication.core.ui.ExtendedTheme
 import java.util.Calendar
@@ -311,10 +310,10 @@ private fun ChoiceImportantTask(
                                 onClick = {
                                     viewModel.setImportance(
                                         when (index) {
-                                            0 -> ImportanceLevel.low
-                                            1 -> ImportanceLevel.basic
-                                            2 -> ImportanceLevel.important
-                                            else -> ImportanceLevel.basic
+                                            0 -> ImportanceLevel.LOW
+                                            1 -> ImportanceLevel.BASIC
+                                            2 -> ImportanceLevel.IMPORTANT
+                                            else -> ImportanceLevel.BASIC
                                         }
                                     )
                                     expanded = false

@@ -34,6 +34,10 @@ android {
         if (baseUrl) {
             buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
         }
+        def oAuthToken = rootProject.ext.authorizationProperties.getProperty("OAUTH_TOKEN")
+        if (oAuthToken) {
+            buildConfigField("String", "OAUTH_TOKEN", "\"${oAuthToken}\"")
+        }
     }
 
 

@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.todoapplication.core.util.Resource
 import com.example.todoapplication.after_reg.data.local.TodoItemsDao
 import com.example.todoapplication.after_reg.data.local.entity.TodoItemEntity
-import com.example.todoapplication.after_reg.data.remote.PreferencesManager
+import com.example.todoapplication.after_reg.data.local.PreferencesManager
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi

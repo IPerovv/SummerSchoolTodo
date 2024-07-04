@@ -20,7 +20,7 @@ data class TodoItemEntity(
     @ColumnInfo("creation_date")
     val creationDate: Date,
     @ColumnInfo("modification_date")
-    val modificationDate: Date,
+    val modificationDate: Date?,
     @ColumnInfo("deadline")
     val deadline: Date?
 ) {

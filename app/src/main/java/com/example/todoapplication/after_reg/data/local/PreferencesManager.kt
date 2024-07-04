@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.data.remote
+package com.example.todoapplication.after_reg.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Singleton
 
-class PreferencesManager(context: Context) {
+@Singleton
+class PreferencesManager @Inject constructor(@ApplicationContext context: Context) {
 
     private val nonSensitivePreferences: SharedPreferences = context.getSharedPreferences(
         "non_sensitive_Info",
@@ -30,5 +33,14 @@ class PreferencesManager(context: Context) {
 
     fun updateCurrentRevision(newRevision: Int) {
         nonSensitivePreferences.edit { putInt("X-Last-Known-Revision", newRevision).apply() }
+    }
+
+    fun getCurrentDeviceId(): String {
+        val deviceId = sensitivePreferences.getString("Device-Id", null)
+        return if (deviceId == null){
+            val newDeviceId = "device ${getNewRandomId()}"
+            sensitivePreferences.edit{putString("Device-Id", newDeviceId)}
+            newDeviceId
+        } else deviceId
     }
 }

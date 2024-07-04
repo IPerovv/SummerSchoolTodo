@@ -1,11 +1,9 @@
 package com.example.todoapplication.after_reg.data.remote
 
-import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class TodoInterceptor(
-    username: String,
+class TodoInterceptorBearer(
     private val password: String,
     private val revision: Int
 ) : Interceptor {

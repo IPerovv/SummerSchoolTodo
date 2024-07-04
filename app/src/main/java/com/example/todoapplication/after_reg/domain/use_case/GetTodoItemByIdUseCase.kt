@@ -4,8 +4,9 @@ import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class GetTodoItemByIdUseCase(
+class GetTodoItemByIdUseCase @Inject constructor(
     private val repository: TodoItemsRepository
 ) {
     suspend operator fun invoke(id: String): TodoItem {

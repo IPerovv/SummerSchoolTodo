@@ -1,19 +1,16 @@
 package com.example.todoapplication.after_reg.di
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import com.example.todoapplication.BuildConfig
-import com.example.todoapplication.after_reg.data.remote.TodoInterceptor
+import com.example.todoapplication.after_reg.data.remote.TodoInterceptorBearer
 import com.example.todoapplication.after_reg.data.local.TodoItemsDao
 import com.example.todoapplication.after_reg.domain.use_case.AddTodoItemUseCase
 import com.example.todoapplication.after_reg.domain.use_case.UpdateTodoItemUseCase
 import com.example.todoapplication.after_reg.data.local.TodoItemsDatabase
 import com.example.todoapplication.after_reg.data.mock.MockTodoApi
-import com.example.todoapplication.after_reg.data.remote.PreferencesManager
+import com.example.todoapplication.after_reg.data.local.PreferencesManager
+import com.example.todoapplication.after_reg.data.remote.TodoInterceptorOAuth
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi
 import com.example.todoapplication.after_reg.data.repository.TodoItemsRepositoryImpl
@@ -26,28 +23,11 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object TodoModule {
-
-    @Provides
-    fun providesAddTodoUseCase(repository: TodoItemsRepository): AddTodoItemUseCase {
-        return AddTodoItemUseCase(repository)
-    }
-
-    @Provides
-    fun providesGetTodoItemById(repository: TodoItemsRepository): GetTodoItemByIdUseCase {
-        return GetTodoItemByIdUseCase(repository)
-    }
-
-    @Provides
-    fun providesUpdateTodoUseCase(repository: TodoItemsRepository): UpdateTodoItemUseCase {
-        return UpdateTodoItemUseCase(repository)
-    }
-
 
     @Provides
     @Singleton
@@ -71,7 +51,7 @@ object TodoModule {
         db: TodoItemsDatabase,
         api: TodoItemsApi,
         preferencesManager: PreferencesManager,
-        mockApi: MockTodoApi,
+        //mockApi: MockTodoApi,
     ): TodoItemsRepository {
         return TodoItemsRepositoryImpl(api, db.dao, preferencesManager)
         // return MockTodoItemsRepositoryImpl(mockApi, db.dao)
@@ -93,27 +73,19 @@ object TodoModule {
     @Singleton
     @Provides
     fun providesOkhttpClient(
-        todoInterceptor: TodoInterceptor
+        //todoInterceptorBearer: TodoInterceptorBearer,
+        todoInterceptorOAuth: TodoInterceptorOAuth
     ): OkHttpClient {
         return OkHttpClient.Builder()
-            .apply { addInterceptor(todoInterceptor) }.build()
+            .apply { addInterceptor(todoInterceptorOAuth) }.build()
     }
 
     @Provides
     @Singleton
-    fun providesPreferencesManager(
-        @ApplicationContext context: Context
-    ): PreferencesManager {
-        return PreferencesManager(context)
-    }
-
-    @Provides
-    @Singleton
-    fun providesTodoInterceptor(
+    fun providesTodoInterceptorBearer(
         preferencesManager: PreferencesManager
-    ): TodoInterceptor {
-        return TodoInterceptor(
-            BuildConfig.AUTH_LOGIN,
+    ): TodoInterceptorBearer {
+        return TodoInterceptorBearer(
             BuildConfig.AUTH_PASSWORD,
             preferencesManager.getCurrentRevision()
         )

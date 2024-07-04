@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.features.todo.detailed.compose
+package com.example.todoapplication.after_reg.features.todo.detailed
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.todoapplication.after_reg.features.todo.detailed.DetailedTodoItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
