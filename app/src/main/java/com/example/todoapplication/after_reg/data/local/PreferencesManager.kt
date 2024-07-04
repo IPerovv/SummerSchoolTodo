@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.example.todoapplication.BuildConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Named
@@ -33,6 +34,15 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
 
     fun updateCurrentRevision(newRevision: Int) {
         nonSensitivePreferences.edit { putInt("X-Last-Known-Revision", newRevision).apply() }
+    }
+
+    fun getOAuthToken(): String{
+        val token = sensitivePreferences.getString("OAuth-Token", null)
+        return if (token == null){
+            val newToken = BuildConfig.OAUTH_TOKEN
+            sensitivePreferences.edit{putString("OAuth-Token", newToken)}
+            newToken
+        } else token
     }
 
     fun getCurrentDeviceId(): String {

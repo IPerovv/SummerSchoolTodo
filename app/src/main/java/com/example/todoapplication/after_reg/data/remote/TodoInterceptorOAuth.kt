@@ -16,7 +16,7 @@ class TodoInterceptorOAuth @Inject constructor(
         val request = chain.request()
             .newBuilder()
             .addHeader("X-Last-Known-Revision", preferencesManager.getCurrentRevision().toString())
-            .addHeader("Authorization", "OAuth ${BuildConfig.OAUTH_TOKEN}")
+            .addHeader("Authorization", "OAuth ${preferencesManager.getOAuthToken()}")
             .build()
         return chain.proceed(request)
     }

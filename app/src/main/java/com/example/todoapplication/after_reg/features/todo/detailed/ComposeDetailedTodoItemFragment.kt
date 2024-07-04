@@ -26,7 +26,7 @@ class ComposeDetailedTodoItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val todoItemId = args.id.toString()
+        val todoItemId = args.id
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -39,8 +39,20 @@ class ComposeDetailedTodoItemFragment : Fragment() {
                 DetailedTodoItemScreen(
                     viewModel = detailedTodoItemViewModel,
                     onBack = { findNavController().popBackStack() },
-                    onSave = { findNavController().popBackStack() }, //TODO: Переделать под сохранение
-                    onDelete = { findNavController().popBackStack() } //TODO: Переделать под удаление
+                    onSave = {
+                        if (args.id == null) {
+                            detailedTodoItemViewModel.addTodoItem()
+                        } else {
+                            detailedTodoItemViewModel.updateTodoItem()
+                        }
+                        findNavController().popBackStack()
+                    },
+                    onDelete = {
+                        if (args.id != null) {
+                            detailedTodoItemViewModel.deleteTodoItem()
+                            findNavController().popBackStack()
+                        }
+                    }
                 )
             }
         }

@@ -70,7 +70,6 @@ class TodoItemsRepositoryImpl(
         }
     }
 
-    //TODO
     override fun addTodoItem(todoItem: TodoItemEntity) {
         runCatching {
             dao.addTodoItem(todoItem)
@@ -83,18 +82,23 @@ class TodoItemsRepositoryImpl(
     }
 
     override fun updateTodoItem(todoItem: TodoItemEntity){
-        TODO("Not yet implemented")
+        runCatching {
+            dao.addTodoItem(todoItem)
+        }.onFailure {
+
+        }.onSuccess {
+
+        }
+        Log.i("repImpl", "Updated Todo")
     }
 
-
-    // TODO: Убрать try
     override fun deleteTodoItem(todoItem: TodoItemEntity){
-        try {
+        runCatching {
             dao.deleteTodoItem(todoItem)
-        } catch (e: HttpException) {
-            Log.e("RepImpl", "Smth went wrong")
-        } catch (e: IOException) {
-            Log.e("RepImpl", "Couldn't reach server")
+        }.onFailure {
+
+        }.onSuccess {
+
         }
         Log.i("repImpl", "{ \" ${todoItem.text} \" was deleted}")
     }

@@ -2,6 +2,7 @@ package com.example.todoapplication.after_reg.features.todo.detailed
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,8 +29,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.todoapplication.R
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
+import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.core.ui.AppTheme
 import com.example.todoapplication.core.ui.ExtendedTheme
 import java.util.Calendar
@@ -42,9 +45,9 @@ fun DetailedTodoItemScreen(
     onSave: () -> Unit,
     onDelete: () -> Unit
 ) {
-    val importance by viewModel.selectedImportance.collectAsState()
-    val deadline by viewModel.deadline.collectAsState()
-    val todoBody by viewModel.todoBody.collectAsState()
+    val importance by viewModel.selectedImportance.collectAsStateWithLifecycle()
+    val deadline by viewModel.deadline.collectAsStateWithLifecycle()
+    val todoBody by viewModel.todoBody.collectAsStateWithLifecycle()
 
     AppTheme {
         Scaffold(
@@ -56,7 +59,7 @@ fun DetailedTodoItemScreen(
             topBar = {
                 TodoTaskTopBar(
                     onNavigateUp = onBack,
-                    onAction = onSave
+                    onAction = onSave,
                 )
 
             },
@@ -94,7 +97,7 @@ fun DetailedTodoItemScreen(
 @Composable
 private fun TodoTaskTopBar(
     onNavigateUp: () -> Unit = {},
-    onAction: () -> Unit = {}
+    onAction: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier
@@ -130,7 +133,9 @@ private fun TodoTaskTopBar(
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
-                    onClick = { onAction() }
+                    onClick = {
+                        onAction()
+                    }
                 )
                 .wrapContentSize(align = Alignment.Center)
                 .padding(end = 7.dp, top = 7.dp),

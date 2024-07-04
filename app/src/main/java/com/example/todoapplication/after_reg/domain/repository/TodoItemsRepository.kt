@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 interface TodoItemsRepository {
     fun getAllTodoItems(): Flow<Resource<List<TodoItem>>>
 
-    fun addTodoItem(todoItem: TodoItemEntity)//Todo: реализовать
+    fun addTodoItem(todoItem: TodoItemEntity)
 
-    fun updateTodoItem(todoItem: TodoItemEntity)//Todo: реализовать
+    fun updateTodoItem(todoItem: TodoItemEntity)
 
-    fun deleteTodoItem(todoItem: TodoItemEntity) //Todo: реализовать
+    fun deleteTodoItem(todoItem: TodoItemEntity)
 
     suspend fun getTodoItemById(id: String): TodoItem
 }
