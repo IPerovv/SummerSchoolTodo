@@ -76,12 +76,12 @@ import java.util.Calendar
 //
 //            saveButton.setOnClickListener {
 //                //clearFocusTv()
-//                findNavController().popBackStack() //TODO: переделать под сохранение объекта
+//                findNavController().popBackStack()
 //            }
 //
 //            deleteBlock.setOnClickListener {
 //                //clearFocusTv()
-//                findNavController().popBackStack() //TODO:  переделеать под удаление объекта
+//                findNavController().popBackStack()
 //            }
 //
 //            dateSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -136,7 +136,7 @@ import java.util.Calendar
 ////        val imm =
 ////            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
 ////        imm.hideSoftInputFromWindow(view?.windowToken,0)
-////        //TODO: Закрывать клавиатуру при нажатии на кнопку или в любое другое место кроме ET
+////
 ////    }
 //}
 //

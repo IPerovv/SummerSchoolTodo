@@ -58,9 +58,7 @@ class MockTodoItemsRepositoryImpl(
         }.getOrNull()
     }
 
-    override suspend fun updateData() {
-
-    }
+    override suspend fun updateData(){}
 
     override suspend fun updateTodoItem(todoItem: TodoItemEntity) {
             TODO()

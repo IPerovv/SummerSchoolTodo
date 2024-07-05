@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val extendedColors =

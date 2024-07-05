@@ -35,6 +35,7 @@ fragment = "1.8.0"
 securityCrypto = "1.0.0"
 workRuntimeKtx = "2.7.1"
 hiltCommon = "1.2.0"
+ktlintVers = "11.2.0"
 
 
 [libraries]
@@ -93,6 +94,7 @@ googleDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "dagge
 devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVers" }
 
 
 
