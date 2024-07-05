@@ -13,10 +13,5 @@ class MockTodoApi @Inject constructor(@ApplicationContext val context: Context) 
         val jsonString = JsonUtil.readJsonFromFile(context, "mock1.json")
         val gson = Gson()
         return gson.fromJson(jsonString, ResponseDto::class.java)
-        //moshi
     }
 }
-
-//return ResponseDto(
-//emptyList()
-//)

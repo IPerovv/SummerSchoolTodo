@@ -60,10 +60,11 @@ object TodoModule {
     @Provides
     @Singleton
     fun providesTodoApi(
-        client: OkHttpClient
+        client: OkHttpClient,
+        preferencesManager: PreferencesManager
     ): TodoItemsApi {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(preferencesManager.getBaseUrl())
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -73,24 +74,24 @@ object TodoModule {
     @Singleton
     @Provides
     fun providesOkhttpClient(
-        //todoInterceptorBearer: TodoInterceptorBearer,
-        todoInterceptorOAuth: TodoInterceptorOAuth
+        todoInterceptorOAuth: TodoInterceptorOAuth,
+        todoInterceptorBearer: TodoInterceptorBearer //Менять тут если нет OAuth
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .apply { addInterceptor(todoInterceptorOAuth) }.build()
+            //.apply { addInterceptor(todoInterceptorBearer) }.build()
     }
 
-    @Provides
-    @Singleton
-    fun providesTodoInterceptorBearer(
-        preferencesManager: PreferencesManager
-    ): TodoInterceptorBearer {
-        return TodoInterceptorBearer(
-            BuildConfig.AUTH_PASSWORD,
-            preferencesManager.getCurrentRevision()
-        )
-    }
-
+//    @Provides
+//    @Singleton
+//    fun providesTodoInterceptorBearer(
+//        preferencesManager: PreferencesManager
+//    ): TodoInterceptorBearer {
+//        return TodoInterceptorBearer(
+//            BuildConfig.AUTH_PASSWORD,
+//            preferencesManager.getCurrentRevision()
+//        )
+//    }
 }
 
 

@@ -17,10 +17,10 @@ interface TodoItemsDao {
     suspend fun getTodoItemById(id: String): TodoItemEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addTodoItem(job: TodoItemEntity)
+    suspend fun addTodoItem(job: TodoItemEntity)
 
     @Delete
-    fun deleteTodoItem(job: TodoItemEntity)
+    suspend fun deleteTodoItem(job: TodoItemEntity)
 
     @Query("DELETE FROM todo_db")
     suspend fun clearTodos()

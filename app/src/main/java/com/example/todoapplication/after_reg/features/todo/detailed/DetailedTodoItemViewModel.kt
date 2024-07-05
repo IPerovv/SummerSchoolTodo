@@ -3,6 +3,7 @@ package com.example.todoapplication.after_reg.features.todo.detailed
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.todoapplication.after_reg.data.local.PreferencesManager
 import com.example.todoapplication.after_reg.data.local.getNewRandomId
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
 import com.example.todoapplication.after_reg.domain.model.TodoItem
@@ -26,13 +27,14 @@ class DetailedTodoItemViewModel @Inject constructor(
     private val getTodoItemByIdUseCase: GetTodoItemByIdUseCase,
     private val addItemUseCase: AddTodoItemUseCase,
     private val updateTodoItemUseCase: UpdateTodoItemUseCase,
-    private val deleteTodoItemUseCase: DeleteTodoItemUseCase
+    private val deleteTodoItemUseCase: DeleteTodoItemUseCase,
+    preferencesManager: PreferencesManager
 ) : ViewModel() {
 
     private val _selectedImportance = MutableStateFlow(" ")
     val selectedImportance: MutableStateFlow<String> get() = _selectedImportance
 
-    private val _deadline = MutableStateFlow<String?>(" ")
+    private val _deadline = MutableStateFlow<String?>(null)
     val deadline: MutableStateFlow<String?> get() = _deadline
 
     private val _todoBody = MutableStateFlow(" ")
@@ -40,6 +42,8 @@ class DetailedTodoItemViewModel @Inject constructor(
 
     private val _todoItem = MutableStateFlow<TodoItem?>(null)
     val todoItem: StateFlow<TodoItem?> get() = _todoItem
+
+    private val thisDeviceId = preferencesManager.getCurrentDeviceId()
 
 
     suspend fun setUpInfo(id: String?) {
@@ -50,7 +54,7 @@ class DetailedTodoItemViewModel @Inject constructor(
             _todoBody.value = _todoItem.value!!.todo
         } else {
             _selectedImportance.value = ImportanceLevel.BASIC.name.lowercase()
-            _deadline.value = setDate(null)
+            _deadline.value = null
             _todoBody.value = ""
         }
     }
@@ -66,18 +70,16 @@ class DetailedTodoItemViewModel @Inject constructor(
         _deadline.value = setDate(calendar.time)
     }
 
-    fun setDate(date: Date?): String {
+    fun setDate(date: Date?): String? {
         val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
         return when (date) {
-            null -> " "
+            null -> null
             else -> dateFormat.format(date)
         }
     }
 
     private fun dateFromString(date: String?): Date? {
-        if (date == "" || date == null) {
-            return null
-        }
+        if (date == null) return null
 
         val format = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
         return format.parse(date)
@@ -87,7 +89,7 @@ class DetailedTodoItemViewModel @Inject constructor(
         _todoBody.value = body
     }
 
-    fun addTodoItem() {
+    suspend fun addTodoItem() {
         viewModelScope.launch(Dispatchers.IO) {
             addItemUseCase(
                 TodoItem(
@@ -96,14 +98,15 @@ class DetailedTodoItemViewModel @Inject constructor(
                     completed = false,
                     creationDate = Date(),
                     deadline = dateFromString(_deadline.value),
-                    modificationDate = null,
-                    importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase())
+                    modificationDate = Date(),
+                    importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase()),
+                    lastUpdatedBy = thisDeviceId
                 ).toTodoItemEntity()
             )
         }
     }
 
-    fun updateTodoItem() {
+    suspend fun updateTodoItem() {
         viewModelScope.launch(Dispatchers.IO) {
             updateTodoItemUseCase(
                 TodoItem(
@@ -113,13 +116,14 @@ class DetailedTodoItemViewModel @Inject constructor(
                     creationDate = _todoItem.value!!.creationDate,
                     deadline = dateFromString(_deadline.value),
                     modificationDate = Date(),
-                    importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase())
+                    importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase()),
+                    lastUpdatedBy = thisDeviceId
                 ).toTodoItemEntity()
             )
         }
     }
 
-    fun deleteTodoItem() {
+    suspend fun deleteTodoItem() {
         viewModelScope.launch(Dispatchers.IO) {
             deleteTodoItemUseCase(
                 TodoItem(
@@ -129,7 +133,8 @@ class DetailedTodoItemViewModel @Inject constructor(
                     creationDate = _todoItem.value!!.creationDate,
                     deadline = dateFromString(_deadline.value),
                     modificationDate = Date(),
-                    importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase())
+                    importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase()),
+                    lastUpdatedBy = thisDeviceId
                 ).toTodoItemEntity()
             )
         }

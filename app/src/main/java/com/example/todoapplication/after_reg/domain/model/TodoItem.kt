@@ -11,7 +11,8 @@ data class TodoItem(
     val completed: Boolean,
     val creationDate: Date,
     val modificationDate: Date?,
-    val deadline: Date?
+    val deadline: Date?,
+    val lastUpdatedBy: String?
 ) {
 
     fun toTodoItemEntity(): TodoItemEntity {
@@ -22,7 +23,8 @@ data class TodoItem(
             done = completed,
             creationDate = creationDate,
             modificationDate = modificationDate,
-            deadline = deadline
+            deadline = deadline,
+            lastUpdatedBy = lastUpdatedBy
         )
     }
 }

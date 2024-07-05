@@ -7,7 +7,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class GetAllTodoItemsUseCase @Inject constructor(
     private val repository: TodoItemsRepository
 ) {
@@ -15,4 +17,3 @@ class GetAllTodoItemsUseCase @Inject constructor(
         return repository.getAllTodoItems().flowOn(Dispatchers.IO)
     }
 }
-//TODO: перенести во view model

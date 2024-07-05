@@ -1,7 +1,10 @@
 package com.example.todoapplication.after_reg.data.remote
 
 import com.example.todoapplication.after_reg.data.local.entity.TodoItemEntity
+import com.example.todoapplication.after_reg.data.remote.dto.RequestDto
 import com.example.todoapplication.after_reg.data.remote.dto.ResponseDto
+import com.example.todoapplication.after_reg.data.remote.dto.ResponseSingleDto
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -12,12 +15,15 @@ interface TodoItemsApi {
     @GET("list")
     suspend fun getAllTodoItems(): ResponseDto
 
-    @POST("list/add")
-    suspend fun addTodoItem(job: TodoItemEntity)
+    @POST("list")
+    suspend fun addTodoItem(@Body requestDto: RequestDto): ResponseSingleDto
 
     @PUT("list/{id}")
-    suspend fun updateTodoItem(@Path("id") jobId: Int, job: TodoItemEntity)
+    suspend fun updateTodoItem(
+        @Path("id") todoId: String,
+        @Body requestDto: RequestDto
+    ): ResponseSingleDto
 
-    @DELETE("list/{id}") //TODO
-    suspend fun deleteTodoItem(@Path("id") jobId: Int)
+    @DELETE("list/{id}")
+    suspend fun deleteTodoItem(@Path("id") todoId: String): ResponseSingleDto
 }

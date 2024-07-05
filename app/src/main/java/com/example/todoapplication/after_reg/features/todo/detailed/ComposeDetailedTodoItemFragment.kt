@@ -40,17 +40,21 @@ class ComposeDetailedTodoItemFragment : Fragment() {
                     viewModel = detailedTodoItemViewModel,
                     onBack = { findNavController().popBackStack() },
                     onSave = {
-                        if (args.id == null) {
-                            detailedTodoItemViewModel.addTodoItem()
-                        } else {
-                            detailedTodoItemViewModel.updateTodoItem()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            if (args.id == null) {
+                                detailedTodoItemViewModel.addTodoItem()
+                            } else {
+                                detailedTodoItemViewModel.updateTodoItem()
+                            }
+                            findNavController().popBackStack()
                         }
-                        findNavController().popBackStack()
                     },
                     onDelete = {
-                        if (args.id != null) {
-                            detailedTodoItemViewModel.deleteTodoItem()
-                            findNavController().popBackStack()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            if (args.id != null) {
+                                detailedTodoItemViewModel.deleteTodoItem()
+                                findNavController().popBackStack()
+                            }
                         }
                     }
                 )

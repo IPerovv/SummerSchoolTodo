@@ -1,6 +1,5 @@
 package com.example.todoapplication.after_reg.data.remote
 
-import com.example.todoapplication.BuildConfig
 import com.example.todoapplication.after_reg.data.local.PreferencesManager
 import okhttp3.Interceptor
 import okhttp3.Response

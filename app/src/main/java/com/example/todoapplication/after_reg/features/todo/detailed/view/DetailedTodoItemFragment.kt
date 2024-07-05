@@ -21,6 +21,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
+//Устаревший файл
+
 //@AndroidEntryPoint
 //class DetailedTodoItemFragment : Fragment() {
 //    private var _binding: FragmentDetailedTodoItemBinding? = null
