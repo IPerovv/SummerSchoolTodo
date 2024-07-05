@@ -1,10 +1,13 @@
 [versions]
 appcompat = "1.7.0"
+composeBom = "2024.06.00"
 constraintlayout = "2.1.4"
 converterGson = "2.9.0"
 core = "1.13.1"
 coreKtx = "1.13.1"
 espressoCore = "3.5.1"
+foundation = "1.6.8"
+foundationLayout = "1.2.0-alpha04"
 fragmentKtx = "1.8.0"
 hiltAndroidCompiler = "2.51.1"
 hiltAndroid = "2.51.1"
@@ -38,6 +41,7 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-core = { module = "androidx.core:core", version.ref = "core" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "foundationLayout" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
@@ -65,8 +69,13 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 leakCanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version = "navigation" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
-
-
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-material2 = { module = "androidx.compose.material:material" }
+compose-foundation = { module = "androidx.compose.foundation:foundation" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 
 
 
@@ -77,6 +86,7 @@ jetbrainsKotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" 
 googleDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
 devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 
 

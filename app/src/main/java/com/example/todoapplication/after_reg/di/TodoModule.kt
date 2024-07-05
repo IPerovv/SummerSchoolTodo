@@ -3,14 +3,14 @@ package com.example.todoapplication.after_reg.di
 import android.content.Context
 import androidx.room.Room
 import com.example.todoapplication.after_reg.data.local.TodoItemsDao
-import com.example.todoapplication.after_reg.domain.use_case.AddTodoItem
-import com.example.todoapplication.after_reg.domain.use_case.UpdateTodoItem
+import com.example.todoapplication.after_reg.domain.use_case.AddTodoItemUseCase
+import com.example.todoapplication.after_reg.domain.use_case.UpdateTodoItemUseCase
 import com.example.todoapplication.after_reg.data.local.TodoItemsDatabase
 import com.example.todoapplication.after_reg.data.repository.MockTodoItemsRepositoryImpl
 import com.example.todoapplication.after_reg.data.mock.MockTodoApi
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi
-import com.example.todoapplication.after_reg.domain.use_case.GetTodoItemById
+import com.example.todoapplication.after_reg.domain.use_case.GetTodoItemByIdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,21 +25,18 @@ import javax.inject.Singleton
 object TodoModule {
 
     @Provides
-    @Singleton
-    fun providesAddTodoUseCase(repository: TodoItemsRepository): AddTodoItem {
-        return AddTodoItem(repository)
+    fun providesAddTodoUseCase(repository: TodoItemsRepository): AddTodoItemUseCase {
+        return AddTodoItemUseCase(repository)
     }
 
     @Provides
-    @Singleton
-    fun providesGetTodoItemById(repository: TodoItemsRepository): GetTodoItemById{
-        return GetTodoItemById(repository)
+    fun providesGetTodoItemById(repository: TodoItemsRepository): GetTodoItemByIdUseCase{
+        return GetTodoItemByIdUseCase(repository)
     }
 
     @Provides
-    @Singleton
-    fun providesUpdateTodoUseCase(repository: TodoItemsRepository): UpdateTodoItem {
-        return UpdateTodoItem(repository)
+    fun providesUpdateTodoUseCase(repository: TodoItemsRepository): UpdateTodoItemUseCase {
+        return UpdateTodoItemUseCase(repository)
     }
 
 

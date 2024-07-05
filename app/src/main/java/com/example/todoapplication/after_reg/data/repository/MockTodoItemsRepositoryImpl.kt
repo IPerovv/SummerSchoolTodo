@@ -7,8 +7,13 @@ import com.example.todoapplication.after_reg.data.mock.MockTodoApi
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.core.util.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 
 class MockTodoItemsRepositoryImpl(
     private val mock: MockTodoApi,
@@ -17,7 +22,9 @@ class MockTodoItemsRepositoryImpl(
     override fun getAllTodoItems(): Flow<Resource<List<TodoItem>>> = flow {
         emit(Resource.Loading())
 
-        val todoItems = dao.getAllTodoItems().map { it.toTodoItem() }
+        val todoItems: List<TodoItem> = runBlocking {
+            dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }.first()
+        }
         emit(Resource.Loading(todoItems))
 
         runCatching {
@@ -26,18 +33,21 @@ class MockTodoItemsRepositoryImpl(
 
         }.onFailure {
             Resource.Error(
-                message = it.toString(),
+                message = "Something wrong with mock - ${it.message}",
                 data = todoItems
             )
         }.onSuccess {
-            val newJobs = dao.getAllTodoItems().map { it.toTodoItem() }
-            emit(Resource.Success(newJobs))
+            val newTodoItems: List<TodoItem> = runBlocking {
+                dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }.first()
+            }
+            emit(Resource.Success(newTodoItems))
         }.getOrNull()
-    }
+    }.flowOn(Dispatchers.IO)
+
     //exception handler corutines + getOrThrow
-    override fun addTodoItem(job: TodoItemEntity){
+    override fun addTodoItem(todoItem: TodoItemEntity) {
         runCatching {
-            dao.addTodoItem(job)
+            dao.addTodoItem(todoItem)
         }.onFailure {
             TODO("Изменить тип возвращаемого объекта")
         }.onSuccess {
@@ -45,16 +55,17 @@ class MockTodoItemsRepositoryImpl(
         }.getOrNull()
     }
 
-    override fun updateTodoItem(job: TodoItemEntity) {
+    override fun updateTodoItem(todoItem: TodoItemEntity) {
+            TODO()
     }
 
-    override fun deleteTodoItem(job: TodoItemEntity) {
+    override fun deleteTodoItem(todoItem: TodoItemEntity) {
         runCatching {
-            dao.deleteTodoItem(job)
+            dao.deleteTodoItem(todoItem)
         }.onFailure {
             TODO("Изменить тип возвращаемого объекта")
         }.onSuccess {
-            Log.i("repImpl", "{ \" ${job.todo} \" was deleted}")
+            Log.i("repImpl", "{ \" ${todoItem.todo} \" was deleted}")
         }.getOrNull()
     }
 

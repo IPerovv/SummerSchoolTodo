@@ -26,9 +26,10 @@
         <item name="color_gray">@color/gray</item>
         <item name="color_gray_light">@color/gray_light_light</item>
         <item name="color_white">@color/white</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.MyApplication1.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.MyApplication1.AppBarOverlay" parent="ThemeOverlay.AppCompat" />
 
-    <style name="Theme.MyApplication1.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.MyApplication1.PopupOverlay" parent="ThemeOverlay.AppCompat" />
 </resources>
