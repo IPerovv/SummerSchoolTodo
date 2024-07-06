@@ -188,32 +188,26 @@ private fun ChoiceDateTask(
     viewModel: DetailedTodoItemViewModel,
     deadline: String?
 ) {
+    var checkedState by remember { mutableStateOf(deadline != null) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 18.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-
     ) {
-        Box(content = {
-            Column {
-                androidx.compose.material3.Text(
-                    text = stringResource(id = R.string.make_up_to),
-                    color = ExtendedTheme.colors.labelPrimary,
-                    style = ExtendedTheme.typography.body
-                )
-
-                Text(
-                    text = deadline ?: " ",
-                    color = ExtendedTheme.colors.colorBlue,
-                    style = ExtendedTheme.typography.subhead
-                )
-            }
-        })
-
-        var checkedState by rememberSaveable {
-            mutableStateOf(deadline != null)
+        Column {
+            androidx.compose.material3.Text(
+                text = stringResource(id = R.string.make_up_to),
+                color = ExtendedTheme.colors.labelPrimary,
+                style = ExtendedTheme.typography.body
+            )
+            Text(
+                text = deadline ?: " ",
+                color = ExtendedTheme.colors.colorBlue,
+                style = ExtendedTheme.typography.subhead
+            )
         }
 
         val context = LocalContext.current
@@ -221,13 +215,12 @@ private fun ChoiceDateTask(
         androidx.compose.material3.Switch(
             checked = checkedState,
             onCheckedChange = { newState ->
+                checkedState = newState
                 if (newState) {
                     showDataPicker(viewModel, context)
                 } else {
-                    viewModel.setDate(null)
+                    viewModel.clearDeadline()
                 }
-
-                checkedState = newState
             },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = ExtendedTheme.colors.colorBlue,

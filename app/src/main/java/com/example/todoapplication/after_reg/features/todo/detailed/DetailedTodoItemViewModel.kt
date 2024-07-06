@@ -50,7 +50,7 @@ class DetailedTodoItemViewModel @Inject constructor(
         if (id != null) {
             _todoItem.value = getTodoItemByIdUseCase(id)
             _selectedImportance.value = _todoItem.value!!.importance.name.lowercase()
-            _deadline.value = setDate(_todoItem.value!!.deadline)
+            _deadline.value = _todoItem.value!!.deadline?.let { setDate(it) }
             _todoBody.value = _todoItem.value!!.todo
         } else {
             _selectedImportance.value = ImportanceLevel.BASIC.name.lowercase()
@@ -65,18 +65,22 @@ class DetailedTodoItemViewModel @Inject constructor(
 
     fun setNewDate(year: Int, month: Int, dayOfMonth: Int) {
         val calendar = Calendar.getInstance()
-
         calendar.set(year, month, dayOfMonth)
         _deadline.value = setDate(calendar.time)
     }
 
-    fun setDate(date: Date?): String? {
+    private fun setDate(date: Date?): String? {
         val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
         return when (date) {
             null -> null
             else -> dateFormat.format(date)
         }
     }
+
+    fun clearDeadline() {
+        _deadline.value = null
+    }
+
 
     private fun dateFromString(date: String?): Date? {
         if (date == null) return null

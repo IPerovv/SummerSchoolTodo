@@ -85,6 +85,7 @@ class TodoItemsRepositoryImpl(
         }.onSuccess {
             Log.i("repImpl", "Successfully addedTodo")
         }
+        //Тут когда-то появятся уведомления ошибок
     }
 
     override suspend fun updateTodoItem(todoItem: TodoItemEntity) {
@@ -97,6 +98,7 @@ class TodoItemsRepositoryImpl(
             Log.i("repImpl", "ssssssssssssssssso")
         }
         Log.i("repImpl", "Updated Todo")
+        //Тут когда-то появятся уведомления ошибок
     }
 
     override suspend fun deleteTodoItem(todoItem: TodoItemEntity) {
@@ -109,6 +111,7 @@ class TodoItemsRepositoryImpl(
 
         }
         Log.i("repImpl", "{ \" ${todoItem.text} \" was deleted}")
+        //Тут когда-то появятся уведомления ошибок
     }
 
     override suspend fun getTodoItemById(id: String): TodoItem {
