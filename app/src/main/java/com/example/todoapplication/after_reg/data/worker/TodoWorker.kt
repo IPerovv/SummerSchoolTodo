@@ -12,6 +12,10 @@ import com.example.todoapplication.after_reg.domain.use_case.UpdateDataUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
+
+/**
+    Worker class that update info every 8 hours
+ */
 @HiltWorker
 class TodoWorker @AssistedInject constructor(
     @Assisted context: Context,

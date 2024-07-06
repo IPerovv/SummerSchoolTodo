@@ -12,6 +12,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+class that observes connectivity status
+ */
 @Singleton
 class NetworkKConnectivityObserver @Inject constructor(
     @ApplicationContext context: Context

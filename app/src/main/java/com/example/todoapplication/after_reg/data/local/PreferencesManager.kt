@@ -12,6 +12,9 @@ import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
+/**
+  Class that used to interact with shared and encrypted shared preferences
+ */
 @Singleton
 class PreferencesManager @Inject constructor(@ApplicationContext context: Context) {
 

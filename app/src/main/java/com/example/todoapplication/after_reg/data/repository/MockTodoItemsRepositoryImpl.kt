@@ -15,7 +15,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
-//Устаревший файл для использования с моковым репозиторием
+/**
+ deprecated repository implementation for mock data
+ */
 class MockTodoItemsRepositoryImpl(
     private val mock: MockTodoApi,
     private val dao: TodoItemsDao

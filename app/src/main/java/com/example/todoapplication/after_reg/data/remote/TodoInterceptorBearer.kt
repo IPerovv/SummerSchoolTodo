@@ -6,6 +6,9 @@ import okhttp3.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ Interceptor class with "Bearer " .header
+ */
 @Singleton
 class TodoInterceptorBearer @Inject constructor(
     private val preferencesManager: PreferencesManager,

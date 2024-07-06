@@ -3,6 +3,9 @@ package com.example.todoapplication.after_reg.data.local.converters
 import androidx.room.TypeConverter
 import java.util.Date
 
+/**
+    typeConverter class date-timestamp
+*/
 class DateConverter {
     @TypeConverter
     fun timestampToDate(value: Long?): Date? {

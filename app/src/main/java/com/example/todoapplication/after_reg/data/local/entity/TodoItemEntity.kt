@@ -8,6 +8,9 @@ import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import java.util.Date
 
+/**
+Entity data class for todo_db
+ */
 @Entity(tableName = "todo_db")
 data class TodoItemEntity(
     @ColumnInfo(name = "id")
@@ -46,12 +49,12 @@ data class TodoItemEntity(
         )
     }
 
-    private fun dateToTimestamp(date: Date?) : Long? {
+    private fun dateToTimestamp(date: Date?): Long? {
         return date?.time?.div(1000)
     }
 
-    private fun dateToTimestamp(date: Date) : Long {
-        return date.time/1000
+    private fun dateToTimestamp(date: Date): Long {
+        return date.time / 1000
     }
 
 }

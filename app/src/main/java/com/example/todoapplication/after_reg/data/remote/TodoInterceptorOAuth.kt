@@ -6,6 +6,10 @@ import okhttp3.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+Interceptor class with "OAuth " .header
+ */
+
 @Singleton
 class TodoInterceptorOAuth @Inject constructor(
     private val preferencesManager: PreferencesManager,
