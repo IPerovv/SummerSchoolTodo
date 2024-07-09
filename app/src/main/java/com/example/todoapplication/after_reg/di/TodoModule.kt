@@ -2,20 +2,25 @@ package com.example.todoapplication.after_reg.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.todoapplication.BuildConfig
+import com.example.todoapplication.after_reg.data.remote.TodoInterceptorBearer
 import com.example.todoapplication.after_reg.data.local.TodoItemsDao
 import com.example.todoapplication.after_reg.domain.use_case.AddTodoItemUseCase
 import com.example.todoapplication.after_reg.domain.use_case.UpdateTodoItemUseCase
 import com.example.todoapplication.after_reg.data.local.TodoItemsDatabase
-import com.example.todoapplication.after_reg.data.repository.MockTodoItemsRepositoryImpl
 import com.example.todoapplication.after_reg.data.mock.MockTodoApi
+import com.example.todoapplication.after_reg.data.local.PreferencesManager
+import com.example.todoapplication.after_reg.data.remote.TodoInterceptorOAuth
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi
+import com.example.todoapplication.after_reg.data.repository.TodoItemsRepositoryImpl
 import com.example.todoapplication.after_reg.domain.use_case.GetTodoItemByIdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -25,24 +30,10 @@ import javax.inject.Singleton
 object TodoModule {
 
     @Provides
-    fun providesAddTodoUseCase(repository: TodoItemsRepository): AddTodoItemUseCase {
-        return AddTodoItemUseCase(repository)
-    }
-
-    @Provides
-    fun providesGetTodoItemById(repository: TodoItemsRepository): GetTodoItemByIdUseCase{
-        return GetTodoItemByIdUseCase(repository)
-    }
-
-    @Provides
-    fun providesUpdateTodoUseCase(repository: TodoItemsRepository): UpdateTodoItemUseCase {
-        return UpdateTodoItemUseCase(repository)
-    }
-
-
-    @Provides
     @Singleton
-    fun providesTodoInfoDatabase(@ApplicationContext appContext: Context): TodoItemsDatabase {
+    fun providesTodoInfoDatabase(
+        @ApplicationContext appContext: Context
+    ): TodoItemsDatabase {
         return Room.databaseBuilder(
             appContext,
             TodoItemsDatabase::class.java,
@@ -59,21 +50,48 @@ object TodoModule {
     fun providesTodoItemsRepository(
         db: TodoItemsDatabase,
         api: TodoItemsApi,
-        mockApi: MockTodoApi,
+        preferencesManager: PreferencesManager,
+        //mockApi: MockTodoApi,
     ): TodoItemsRepository {
-        //return JobsRepositoryImpl(api, db.dao)
-        return MockTodoItemsRepositoryImpl(mockApi, db.dao)
+        return TodoItemsRepositoryImpl(api, db.dao, preferencesManager)
+        // return MockTodoItemsRepositoryImpl(mockApi, db.dao)
     }
 
     @Provides
     @Singleton
-    fun providesTodoApi(): TodoItemsApi {
-        return Retrofit.Builder().baseUrl(TodoItemsApi.BASE_URL)
+    fun providesTodoApi(
+        client: OkHttpClient,
+        preferencesManager: PreferencesManager
+    ): TodoItemsApi {
+        return Retrofit.Builder()
+            .baseUrl(preferencesManager.getBaseUrl())
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(TodoItemsApi::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun providesOkhttpClient(
+        todoInterceptorOAuth: TodoInterceptorOAuth,
+        todoInterceptorBearer: TodoInterceptorBearer //Менять тут если нет OAuth
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .apply { addInterceptor(todoInterceptorOAuth) }.build()
+            //.apply { addInterceptor(todoInterceptorBearer) }.build()
+    }
+
+//    @Provides
+//    @Singleton
+//    fun providesTodoInterceptorBearer(
+//        preferencesManager: PreferencesManager
+//    ): TodoInterceptorBearer {
+//        return TodoInterceptorBearer(
+//            BuildConfig.AUTH_PASSWORD,
+//            preferencesManager.getCurrentRevision()
+//        )
+//    }
 }
 
 

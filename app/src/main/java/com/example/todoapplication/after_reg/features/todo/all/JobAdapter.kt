@@ -13,7 +13,10 @@ import com.example.todoapplication.databinding.ItemTodoBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class JobAdapter(private val onClick: (String) -> Unit) :
+class JobAdapter(
+    private val onClick: (String) -> Unit,
+    private val onCheckedChange: (TodoItem) -> Unit
+) :
     ListAdapter<TodoItem, JobAdapter.Holder>(createDefaultComparator()) {
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
@@ -30,6 +33,10 @@ class JobAdapter(private val onClick: (String) -> Unit) :
             }
             binding.toDetailedTodoBt.setOnClickListener {
                 onClick.invoke(todoItem.id)
+            }
+            binding.todoChb.setOnCheckedChangeListener { _, isChecked ->
+                val updatedItem = todoItem.copy(completed = isChecked)
+                onCheckedChange.invoke(updatedItem)
             }
         }
     }

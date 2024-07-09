@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/composeDetailedTodoItemFragment"
-        android:name="com.example.todoapplication.after_reg.features.todo.detailed.compose.ComposeDetailedTodoItemFragment"
+        android:name="com.example.todoapplication.after_reg.features.todo.detailed.ComposeDetailedTodoItemFragment"
         android:label="ComposeDetailedTodoItemFragment" >
         <argument
             android:name="id"

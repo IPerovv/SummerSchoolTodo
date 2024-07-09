@@ -5,16 +5,15 @@ constraintlayout = "2.1.4"
 converterGson = "2.9.0"
 core = "1.13.1"
 coreKtx = "1.13.1"
-espressoCore = "3.5.1"
-foundation = "1.6.8"
-foundationLayout = "1.2.0-alpha04"
+espressoCore = "3.6.1"
+foundationLayout = "1.6.8"
 fragmentKtx = "1.8.0"
 hiltAndroidCompiler = "2.51.1"
 hiltAndroid = "2.51.1"
 hiltNavigationComposeVersion = "1.2.0"
 hiltCompiler = "1.2.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
+junitVersion = "1.2.1"
 kotlinxCoroutinesAndroid = "1.8.0"
 kotlinxCoroutinesCore = "1.8.0"
 lifecycleLivedataKtx = "2.8.2"
@@ -33,6 +32,10 @@ leakCanary = "2.14"
 navigation = "2.8.0-beta03"
 serialization = "1.6.3"
 fragment = "1.8.0"
+securityCrypto = "1.0.0"
+workRuntimeKtx = "2.7.1"
+hiltCommon = "1.2.0"
+ktlintVers = "11.2.0"
 
 
 [libraries]
@@ -44,6 +47,7 @@ androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", vers
 androidx-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "foundationLayout" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompiler" }
+androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltNavigationComposeVersion" }
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
@@ -54,6 +58,7 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRunt
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
@@ -76,6 +81,8 @@ compose-foundation = { module = "androidx.compose.foundation:foundation" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.ref = "hiltCommon" }
 
 
 
@@ -87,6 +94,7 @@ googleDaggerHilt = { id = "com.google.dagger.hilt.android", version.ref = "dagge
 devtoolsKsp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVers" }
 
 
 

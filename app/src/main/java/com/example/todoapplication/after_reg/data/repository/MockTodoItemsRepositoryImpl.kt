@@ -15,6 +15,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 
+/**
+ deprecated repository implementation for mock data
+ */
 class MockTodoItemsRepositoryImpl(
     private val mock: MockTodoApi,
     private val dao: TodoItemsDao
@@ -25,11 +28,12 @@ class MockTodoItemsRepositoryImpl(
         val todoItems: List<TodoItem> = runBlocking {
             dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }.first()
         }
+
         emit(Resource.Loading(todoItems))
 
         runCatching {
             val mockTodo = mock.getAllTodoItems()
-            dao.updateDatabase(mockTodo.todos.map { it.toJobEntity() })
+            dao.updateDatabase(mockTodo.list.map { it.toJobEntity() })
 
         }.onFailure {
             Resource.Error(
@@ -45,9 +49,10 @@ class MockTodoItemsRepositoryImpl(
     }.flowOn(Dispatchers.IO)
 
     //exception handler corutines + getOrThrow
-    override fun addTodoItem(todoItem: TodoItemEntity) {
+    override suspend fun addTodoItem(todoItem: TodoItemEntity) {
+        dao.addTodoItem(todoItem)
         runCatching {
-            dao.addTodoItem(todoItem)
+
         }.onFailure {
             TODO("Изменить тип возвращаемого объекта")
         }.onSuccess {
@@ -55,17 +60,19 @@ class MockTodoItemsRepositoryImpl(
         }.getOrNull()
     }
 
-    override fun updateTodoItem(todoItem: TodoItemEntity) {
+    override suspend fun updateData(){}
+
+    override suspend fun updateTodoItem(todoItem: TodoItemEntity) {
             TODO()
     }
 
-    override fun deleteTodoItem(todoItem: TodoItemEntity) {
+    override suspend fun deleteTodoItem(todoItem: TodoItemEntity) {
         runCatching {
             dao.deleteTodoItem(todoItem)
         }.onFailure {
             TODO("Изменить тип возвращаемого объекта")
         }.onSuccess {
-            Log.i("repImpl", "{ \" ${todoItem.todo} \" was deleted}")
+            Log.i("repImpl", "{ \" ${todoItem.text} \" was deleted}")
         }.getOrNull()
     }
 

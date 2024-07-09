@@ -21,7 +21,21 @@ android {
 
         resourceConfigurations += ["en", "ru"]
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def authPassword = rootProject.ext.authorizationProperties.getProperty("AUTH_PASSWORD")
+        if (authPassword) {
+            buildConfigField("String", "AUTH_PASSWORD", "\"${authPassword}\"")
+        }
+        def baseUrl = rootProject.ext.authorizationProperties.getProperty("BASE_URL")
+        if (baseUrl) {
+            buildConfigField("String", "BASE_URL", "\"${baseUrl}\"")
+        }
+        def oAuthToken = rootProject.ext.authorizationProperties.getProperty("OAUTH_TOKEN")
+        if (oAuthToken) {
+            buildConfigField("String", "OAUTH_TOKEN", "\"${oAuthToken}\"")
+        }
     }
+
 
     buildTypes {
         release {
@@ -46,6 +60,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation libs.androidx.core.ktx
@@ -55,9 +70,9 @@ dependencies {
     implementation libs.androidx.core
     implementation libs.androidx.fragment.ktx
     implementation libs.androidx.fragment
-    implementation libs.compose.material2
-    implementation libs.compose.material3
-    implementation libs.compose.ui.tooling.preview
+
+    implementation libs.androidx.security.crypto
+
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
@@ -73,9 +88,11 @@ dependencies {
 
     //Dagger - Hilt
     implementation libs.hilt.android
+    implementation libs.hilt.navigation.compose
+    implementation libs.androidx.hilt.common
+    implementation libs.androidx.hilt.work
     ksp libs.hilt.android.compiler
     ksp libs.androidx.hilt.compiler
-    implementation libs.hilt.navigation.compose
 
     // Retrofit
     implementation libs.retrofit
@@ -94,7 +111,6 @@ dependencies {
     implementation libs.androidx.swiperefreshlayout
 
     //leakCanary
-    debugImplementation libs.leakCanary
 
     //Navigation
     implementation libs.navigation.compose
@@ -105,14 +121,13 @@ dependencies {
     //Compose
     implementation platform(libs.compose.bom)
     androidTestImplementation platform(libs.compose.bom)
-
     implementation libs.compose.material3
     implementation libs.compose.material2
     implementation libs.compose.foundation
     implementation libs.androidx.foundation.layout
-
     implementation libs.compose.ui
-
     implementation libs.compose.ui.tooling.preview
     debugImplementation libs.compose.ui.tooling
+
+    implementation libs.androidx.work.runtime.ktx
 }

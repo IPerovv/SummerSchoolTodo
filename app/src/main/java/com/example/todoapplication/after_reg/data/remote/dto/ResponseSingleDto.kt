@@ -1,9 +1,9 @@
 package com.example.todoapplication.after_reg.data.remote.dto
 
 
-data class ResponseDto(
+data class ResponseSingleDto(
     val status: String,
-    val list: List<TodoItemDto>,
+    val element: TodoItemDto,
     val revision: Int
 )
 

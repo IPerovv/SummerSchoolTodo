@@ -1,4 +1,4 @@
-package com.example.todoapplication.core.util
+package com.example.todoapplication.core.ui
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color

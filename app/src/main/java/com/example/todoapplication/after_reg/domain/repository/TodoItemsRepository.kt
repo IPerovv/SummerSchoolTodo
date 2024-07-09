@@ -8,16 +8,13 @@ import kotlinx.coroutines.flow.Flow
 interface TodoItemsRepository {
     fun getAllTodoItems(): Flow<Resource<List<TodoItem>>>
 
-    fun addTodoItem(todoItem: TodoItemEntity)//Todo: реализовать
+    suspend fun addTodoItem(todoItem: TodoItemEntity)
 
-    fun updateTodoItem(todoItem: TodoItemEntity)//Todo: реализовать
+    suspend fun updateTodoItem(todoItem: TodoItemEntity)
 
-    fun deleteTodoItem(todoItem: TodoItemEntity) //Todo: реализовать
+    suspend fun deleteTodoItem(todoItem: TodoItemEntity)
 
     suspend fun getTodoItemById(id: String): TodoItem
+
+    suspend fun updateData()
 }
-// воркменеджер для обработки отложенной после закрытия приложения
-
-// в фоне но пока живо приложение - foreground service
-
-//

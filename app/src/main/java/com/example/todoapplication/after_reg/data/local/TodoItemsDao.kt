@@ -16,13 +16,13 @@ interface TodoItemsDao {
     @Query("SELECT * FROM todo_db WHERE id = :id")
     suspend fun getTodoItemById(id: String): TodoItemEntity
 
-//    @Query("SELECT * FROM job_db WHERE id = :idToFind")
-//    suspend fun getJobById(idToFind: Int): Job
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addTodoItem(job: TodoItemEntity)
+    suspend fun addTodoItem(job: TodoItemEntity)
 
     @Delete
-    fun deleteTodoItem(job: TodoItemEntity)
+    suspend fun deleteTodoItem(job: TodoItemEntity)
+
+    @Query("DELETE FROM todo_db")
+    suspend fun clearTodos()
 
 }

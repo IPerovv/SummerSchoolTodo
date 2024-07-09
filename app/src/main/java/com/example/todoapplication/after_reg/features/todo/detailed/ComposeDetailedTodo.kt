@@ -1,7 +1,8 @@
-package com.example.todoapplication.after_reg.features.todo.detailed.compose
+package com.example.todoapplication.after_reg.features.todo.detailed
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,11 +29,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.todoapplication.R
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
-import com.example.todoapplication.after_reg.features.todo.detailed.DetailedTodoItemViewModel
-import com.example.todoapplication.core.util.AppTheme
-import com.example.todoapplication.core.util.ExtendedTheme
+import com.example.todoapplication.after_reg.domain.model.TodoItem
+import com.example.todoapplication.core.ui.AppTheme
+import com.example.todoapplication.core.ui.ExtendedTheme
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -43,9 +45,9 @@ fun DetailedTodoItemScreen(
     onSave: () -> Unit,
     onDelete: () -> Unit
 ) {
-    val importance by viewModel.selectedImportance.collectAsState()
-    val deadline by viewModel.deadline.collectAsState()
-    val todoBody by viewModel.todoBody.collectAsState()
+    val importance by viewModel.selectedImportance.collectAsStateWithLifecycle()
+    val deadline by viewModel.deadline.collectAsStateWithLifecycle()
+    val todoBody by viewModel.todoBody.collectAsStateWithLifecycle()
 
     AppTheme {
         Scaffold(
@@ -57,7 +59,7 @@ fun DetailedTodoItemScreen(
             topBar = {
                 TodoTaskTopBar(
                     onNavigateUp = onBack,
-                    onAction = onSave
+                    onAction = onSave,
                 )
 
             },
@@ -95,7 +97,7 @@ fun DetailedTodoItemScreen(
 @Composable
 private fun TodoTaskTopBar(
     onNavigateUp: () -> Unit = {},
-    onAction: () -> Unit = {}
+    onAction: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier
@@ -131,7 +133,9 @@ private fun TodoTaskTopBar(
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
-                    onClick = { onAction() }
+                    onClick = {
+                        onAction()
+                    }
                 )
                 .wrapContentSize(align = Alignment.Center)
                 .padding(end = 7.dp, top = 7.dp),
@@ -184,32 +188,26 @@ private fun ChoiceDateTask(
     viewModel: DetailedTodoItemViewModel,
     deadline: String?
 ) {
+    var checkedState by remember { mutableStateOf(deadline != null) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 18.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-
     ) {
-        Box(content = {
-            Column {
-                androidx.compose.material3.Text(
-                    text = stringResource(id = R.string.make_up_to),
-                    color = ExtendedTheme.colors.labelPrimary,
-                    style = ExtendedTheme.typography.body
-                )
-
-                Text(
-                    text = deadline ?: " ",
-                    color = ExtendedTheme.colors.colorBlue,
-                    style = ExtendedTheme.typography.subhead
-                )
-            }
-        })
-
-        var checkedState by rememberSaveable {
-            mutableStateOf(deadline != null)
+        Column {
+            androidx.compose.material3.Text(
+                text = stringResource(id = R.string.make_up_to),
+                color = ExtendedTheme.colors.labelPrimary,
+                style = ExtendedTheme.typography.body
+            )
+            Text(
+                text = deadline ?: " ",
+                color = ExtendedTheme.colors.colorBlue,
+                style = ExtendedTheme.typography.subhead
+            )
         }
 
         val context = LocalContext.current
@@ -217,13 +215,12 @@ private fun ChoiceDateTask(
         androidx.compose.material3.Switch(
             checked = checkedState,
             onCheckedChange = { newState ->
+                checkedState = newState
                 if (newState) {
                     showDataPicker(viewModel, context)
                 } else {
-                    viewModel.setDate(null)
+                    viewModel.clearDeadline()
                 }
-
-                checkedState = newState
             },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = ExtendedTheme.colors.colorBlue,
@@ -355,6 +352,7 @@ fun DeleteSection(onDelete: () -> Unit) {
         Text("Удалить", color = Color.Red)
     }
 }
+
 
 
 

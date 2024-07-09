@@ -1,4 +1,4 @@
-package com.example.todoapplication.core.util
+package com.example.todoapplication.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

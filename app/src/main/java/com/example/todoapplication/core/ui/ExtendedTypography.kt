@@ -1,4 +1,4 @@
-package com.example.todoapplication.core.util
+package com.example.todoapplication.core.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text

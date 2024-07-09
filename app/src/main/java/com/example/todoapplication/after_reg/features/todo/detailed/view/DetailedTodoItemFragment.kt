@@ -1,4 +1,4 @@
-package com.example.todoapplication.after_reg.features.todo.detailed
+package com.example.todoapplication.after_reg.features.todo.detailed.view
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -14,13 +14,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapplication.R
-import com.example.todoapplication.databinding.FragmentDetailedTodoItemBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import java.util.Calendar
+
+//Устаревший файл
 
 //@AndroidEntryPoint
 //class DetailedTodoItemFragment : Fragment() {
@@ -75,12 +76,12 @@ import java.util.Calendar
 //
 //            saveButton.setOnClickListener {
 //                //clearFocusTv()
-//                findNavController().popBackStack() //TODO: переделать под сохранение объекта
+//                findNavController().popBackStack()
 //            }
 //
 //            deleteBlock.setOnClickListener {
 //                //clearFocusTv()
-//                findNavController().popBackStack() //TODO:  переделеать под удаление объекта
+//                findNavController().popBackStack()
 //            }
 //
 //            dateSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -135,7 +136,7 @@ import java.util.Calendar
 ////        val imm =
 ////            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
 ////        imm.hideSoftInputFromWindow(view?.windowToken,0)
-////        //TODO: Закрывать клавиатуру при нажатии на кнопку или в любое другое место кроме ET
+////
 ////    }
 //}
 //

@@ -8,12 +8,12 @@ import dagger.hilt.android.AndroidEntryPoint
 //    AppCompateDelegate.setApplicatio
 //    val currentLocalName =  AppCompatDelegate.getApplicationLocales()[0]?.displayName
 
-//adapter by lazy
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        (application as JobsApp).initBackgroundTodoWorker()
     }
 }
 

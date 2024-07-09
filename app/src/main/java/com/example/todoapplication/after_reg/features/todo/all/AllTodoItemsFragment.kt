@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.todoapplication.after_reg.domain.model.TodoItem
+import com.example.todoapplication.after_reg.features.connectivity.ConnectivityObserver
 import com.example.todoapplication.databinding.FragmentAllTodoItemsBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -28,14 +29,18 @@ class AllTodoItemsFragment : Fragment() {
     private val allTodoItemsViewModel: AllTodoItemsViewModel by viewModels()
 
     private val adapter by lazy {
-        JobAdapter { id ->
-            findNavController().navigate(
-                //AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
-                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(
-                    id
+        JobAdapter(
+            onClick = { id ->
+                findNavController().navigate(
+                    AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(
+                        id
+                    )
                 )
-            )
-        }
+            },
+            onCheckedChange = { todoItem ->
+                allTodoItemsViewModel.updateTodoItem(todoItem)
+            }
+        )
     }
 
     override fun onCreateView(
@@ -60,24 +65,25 @@ class AllTodoItemsFragment : Fragment() {
             allTodoItemsSr.setOnRefreshListener {
                 allTodoItemsViewModel.loadAllTodoItems()
                 allTodoItemsSr.isRefreshing = false
-                madeTodosCounterTv.text = adapter.getCompletedCount().toString()
             }
 
             allTodoItemsFab.setOnClickListener {
                 controller.navigate(
-                    //AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToDetailedJobFragment(
                     AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(
-                        null.toString()
+                        null
                     )
                 )
             }
+
         }
+        subscribeToObservers()
+    }
 
-        allTodoItemsViewModel.state.onEach { result ->
-            adapter.submitList(result.todoItemItems)
+    private fun subscribeToObservers() {
+        allTodoItemsViewModel.state.onEach { state ->
+            adapter.submitList(state.todoItemItems)
+            binding.madeTodosCounterTv.text = adapter.getCompletedCount().toString()
         }.launchInViewLifecycleScope()
-
-        //TODO: Переделать названия в навграфе
 
         allTodoItemsViewModel.eventFlow.onEach { event ->
             when (event) {
@@ -90,11 +96,38 @@ class AllTodoItemsFragment : Fragment() {
                 }
             }
         }.launchInViewLifecycleScope()
+
+        allTodoItemsViewModel.connectionFlow.onEach { status ->
+            when (status) {
+                ConnectivityObserver.ConnectionStatus.Available -> {
+                    allTodoItemsViewModel.loadAllTodoItems()
+                    Snackbar.make(
+                        binding.root,
+                        "Соединение восстановлено, обновление данных",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+
+                else ->
+                    Snackbar.make(
+                        binding.root,
+                        "Connection status: $status",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+            }
+
+        }.launchInViewLifecycleScope()
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        allTodoItemsViewModel.loadAllTodoItems()
     }
 }
 
