@@ -26,7 +26,7 @@ import javax.inject.Inject
 class AllTodoItemsViewModel @Inject constructor(
     private val getAllTodoItemsUseCase: GetAllTodoItemsUseCase,
     private val updateTodoItemUseCase: UpdateTodoItemUseCase,
-    private val networkKConnectivityObserver: NetworkKConnectivityObserver
+    private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TodoItemState())
@@ -88,7 +88,7 @@ class AllTodoItemsViewModel @Inject constructor(
     }
 
     private fun observeConnection() {
-        networkKConnectivityObserver.observe()
+        connectivityObserver.observe()
             .onEach { status ->
                 _connectionFlow.emit(status)
             }.launchIn(viewModelScope)

@@ -1,6 +1,5 @@
 package com.example.todoapplication.after_reg.features.todo.detailed
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoapplication.after_reg.data.local.PreferencesManager
@@ -104,10 +103,11 @@ class DetailedTodoItemViewModel @Inject constructor(
                     deadline = dateFromString(_deadline.value),
                     modificationDate = Date(),
                     importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase()),
-                    lastUpdatedBy = thisDeviceId
+                    lastUpdatedBy = thisDeviceId,
+                    files = null
                 ).toTodoItemEntity()
             )
-        }
+        }.join()
     }
 
     suspend fun updateTodoItem() {
@@ -121,10 +121,11 @@ class DetailedTodoItemViewModel @Inject constructor(
                     deadline = dateFromString(_deadline.value),
                     modificationDate = Date(),
                     importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase()),
-                    lastUpdatedBy = thisDeviceId
+                    lastUpdatedBy = thisDeviceId,
+                    files = null
                 ).toTodoItemEntity()
             )
-        }
+        }.join()
     }
 
     suspend fun deleteTodoItem() {
@@ -138,10 +139,11 @@ class DetailedTodoItemViewModel @Inject constructor(
                     deadline = dateFromString(_deadline.value),
                     modificationDate = Date(),
                     importance = ImportanceLevel.valueOf(_selectedImportance.value.uppercase()),
-                    lastUpdatedBy = thisDeviceId
+                    lastUpdatedBy = thisDeviceId,
+                    files = null
                 ).toTodoItemEntity()
             )
-        }
+        }.join()
     }
 
 }

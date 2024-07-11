@@ -17,9 +17,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ComposeDetailedTodoItemFragment : Fragment() {
-
     private val detailedTodoItemViewModel: DetailedTodoItemViewModel by viewModels()
-
     private val args: ComposeDetailedTodoItemFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

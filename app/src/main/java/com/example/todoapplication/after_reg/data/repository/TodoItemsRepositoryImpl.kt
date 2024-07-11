@@ -1,14 +1,16 @@
 package com.example.todoapplication.after_reg.data.repository
 
 import android.util.Log
-import com.example.todoapplication.core.util.Resource
+import com.example.todoapplication.R
+import com.example.todoapplication.after_reg.data.stringProvider.StringProvider
+import com.example.todoapplication.after_reg.data.local.PreferencesManager
 import com.example.todoapplication.after_reg.data.local.TodoItemsDao
 import com.example.todoapplication.after_reg.data.local.entity.TodoItemEntity
-import com.example.todoapplication.after_reg.data.local.PreferencesManager
-import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
-import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi
 import com.example.todoapplication.after_reg.data.remote.dto.RequestDto
+import com.example.todoapplication.after_reg.domain.model.TodoItem
+import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
+import com.example.todoapplication.core.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -18,12 +20,13 @@ import retrofit2.HttpException
 import java.io.IOException
 
 /**
- repository implementation
+repository implementation
  */
 class TodoItemsRepositoryImpl(
     private val api: TodoItemsApi,
     private val dao: TodoItemsDao,
     private val preferencesManager: PreferencesManager,
+    private val stringProvider: StringProvider
 ) : TodoItemsRepository {
 
     override fun getAllTodoItems(): Flow<Resource<List<TodoItem>>> = flow {
@@ -42,14 +45,22 @@ class TodoItemsRepositoryImpl(
             preferencesManager.updateCurrentRevision(remoteTodoItems.revision)
 
         }.onFailure {
-
             when (it) {
-                is HttpException -> emit(
-                    Resource.Error(
-                        message = "Oops, something went wrong!",
-                        data = todoItems
+                is HttpException -> {
+                    val errorMessage = when (it.code()) {
+                        400 -> stringProvider.getString(R.string.http400Error)
+                        401 -> stringProvider.getString(R.string.http401Error)
+                        404 -> stringProvider.getString(R.string.http404Error)
+                        500 -> stringProvider.getString(R.string.http500Error)
+                        else -> "Oops, something went wrong!"
+                    }
+                    emit(
+                        Resource.Error(
+                            message = errorMessage.toString(),
+                            data = todoItems
+                        )
                     )
-                )
+                }
 
                 is IOException -> emit(
                     Resource.Error(
@@ -61,7 +72,6 @@ class TodoItemsRepositoryImpl(
                 else -> emit(
                     Resource.Error(
                         message = it.message.toString(),
-
                         data = todoItems
                     )
                 )

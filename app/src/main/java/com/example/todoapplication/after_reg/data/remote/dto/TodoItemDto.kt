@@ -24,7 +24,9 @@ data class TodoItemDto(
     @SerializedName("changed_at")
     val modificationDate: Long?,
     @SerializedName("last_updated_by")
-    val lastUpdatedBy: String?
+    val lastUpdatedBy: String?,
+    @SerializedName("files")
+    val files: List<String>? = null
 ) {
     fun toJobEntity(): TodoItemEntity {
         return TodoItemEntity(

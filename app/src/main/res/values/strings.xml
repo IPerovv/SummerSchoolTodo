@@ -8,4 +8,8 @@
     <string name="edit_text_hint">Что нужно сделать...</string>
     <string name="make_up_to">Сделать до</string>
     <string name="delete">Удалить\n</string>
+    <string name="http400Error">UnsynchronizedData</string>
+    <string name="http401Error">Неверная авторизация</string>
+    <string name="http404Error">Такой элемент на сервере не найден</string>
+    <string name="http500Error">Какая-то ошибка сервера</string>
 </resources>

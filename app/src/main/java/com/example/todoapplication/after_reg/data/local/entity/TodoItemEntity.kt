@@ -32,7 +32,7 @@ data class TodoItemEntity(
 ) {
     fun toTodoItem(): TodoItem {
         return TodoItem(
-            id, text, importance, done, creationDate, modificationDate, deadline, lastUpdatedBy
+            id, text, importance, done, creationDate, modificationDate, deadline, lastUpdatedBy, null
         )
     }
 
@@ -46,6 +46,7 @@ data class TodoItemEntity(
             modificationDate = dateToTimestamp(modificationDate),
             deadline = dateToTimestamp(deadline),
             lastUpdatedBy = lastUpdatedBy,
+            files = null
         )
     }
 

@@ -2,19 +2,19 @@ package com.example.todoapplication.after_reg.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.todoapplication.BuildConfig
-import com.example.todoapplication.after_reg.data.remote.TodoInterceptorBearer
-import com.example.todoapplication.after_reg.data.local.TodoItemsDao
-import com.example.todoapplication.after_reg.domain.use_case.AddTodoItemUseCase
-import com.example.todoapplication.after_reg.domain.use_case.UpdateTodoItemUseCase
-import com.example.todoapplication.after_reg.data.local.TodoItemsDatabase
-import com.example.todoapplication.after_reg.data.mock.MockTodoApi
+import com.example.todoapplication.after_reg.data.stringProvider.StringProvider
 import com.example.todoapplication.after_reg.data.local.PreferencesManager
+import com.example.todoapplication.after_reg.data.local.TodoItemsDao
+import com.example.todoapplication.after_reg.data.local.TodoItemsDatabase
+import com.example.todoapplication.after_reg.data.remote.TodoInterceptorBearer
 import com.example.todoapplication.after_reg.data.remote.TodoInterceptorOAuth
-import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi
 import com.example.todoapplication.after_reg.data.repository.TodoItemsRepositoryImpl
-import com.example.todoapplication.after_reg.domain.use_case.GetTodoItemByIdUseCase
+import com.example.todoapplication.after_reg.data.stringProvider.StringProviderImpl
+import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
+import com.example.todoapplication.after_reg.features.connectivity.ConnectivityObserver
+import com.example.todoapplication.after_reg.features.connectivity.NetworkKConnectivityObserver
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,9 +51,10 @@ object TodoModule {
         db: TodoItemsDatabase,
         api: TodoItemsApi,
         preferencesManager: PreferencesManager,
+        stringProvider: StringProvider
         //mockApi: MockTodoApi,
     ): TodoItemsRepository {
-        return TodoItemsRepositoryImpl(api, db.dao, preferencesManager)
+        return TodoItemsRepositoryImpl(api, db.dao, preferencesManager, stringProvider)
         // return MockTodoItemsRepositoryImpl(mockApi, db.dao)
     }
 
@@ -80,6 +81,21 @@ object TodoModule {
         return OkHttpClient.Builder()
             .apply { addInterceptor(todoInterceptorOAuth) }.build()
             //.apply { addInterceptor(todoInterceptorBearer) }.build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStringProvider(@ApplicationContext context: Context): StringProvider {
+        return StringProviderImpl(context)
+    }
+
+    @Module
+    @InstallIn(SingletonComponent::class)
+    abstract class ConnectivityModule {
+        @Binds
+        abstract fun bindConnectivityObserver(
+            networkKConnectivityObserver: NetworkKConnectivityObserver
+        ): ConnectivityObserver
     }
 
 //    @Provides

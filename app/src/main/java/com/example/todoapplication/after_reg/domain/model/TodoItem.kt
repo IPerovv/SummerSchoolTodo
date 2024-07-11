@@ -12,7 +12,8 @@ data class TodoItem(
     val creationDate: Date,
     val modificationDate: Date?,
     val deadline: Date?,
-    val lastUpdatedBy: String?
+    val lastUpdatedBy: String?,
+    val files: List<String>?
 ) {
 
     fun toTodoItemEntity(): TodoItemEntity {
