@@ -3,7 +3,7 @@ package com.example.todoapplication.data.repository
 import android.util.Log
 import com.example.todoapplication.R
 import com.example.todoapplication.core.util.Resource
-import com.example.todoapplication.data.local.PreferencesManager
+import com.example.todoapplication.data.PreferencesManager
 import com.example.todoapplication.data.local.TodoItemsDao
 import com.example.todoapplication.data.local.entity.TodoItemEntity
 import com.example.todoapplication.data.remote.TodoItemsApi

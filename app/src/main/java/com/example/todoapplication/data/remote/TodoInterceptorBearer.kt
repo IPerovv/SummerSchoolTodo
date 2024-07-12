@@ -1,6 +1,6 @@
 package com.example.todoapplication.data.remote
 
-import com.example.todoapplication.data.local.PreferencesManager
+import com.example.todoapplication.data.PreferencesManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

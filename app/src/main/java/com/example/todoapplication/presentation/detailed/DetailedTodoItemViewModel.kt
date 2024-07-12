@@ -2,7 +2,8 @@ package com.example.todoapplication.presentation.detailed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.todoapplication.data.local.PreferencesManager
+import com.example.todoapplication.core.util.getNewRandomId
+import com.example.todoapplication.data.PreferencesManager
 import com.example.todoapplication.domain.model.ImportanceLevel
 import com.example.todoapplication.domain.model.TodoItem
 import com.example.todoapplication.domain.use_case.AddTodoItemUseCase
@@ -95,7 +96,7 @@ class DetailedTodoItemViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             addItemUseCase(
                 TodoItem(
-                    id = com.example.todoapplication.data.local.getNewRandomId(),
+                    id = getNewRandomId(),
                     todo = _todoBody.value,
                     completed = false,
                     creationDate = Date(),

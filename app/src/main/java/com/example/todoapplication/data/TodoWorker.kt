@@ -9,7 +9,6 @@ import com.example.todoapplication.domain.use_case.UpdateDataUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
-
 /**
     Worker class that update info every 8 hours
  */

@@ -2,7 +2,7 @@ package com.example.todoapplication.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.todoapplication.data.local.PreferencesManager
+import com.example.todoapplication.data.PreferencesManager
 import com.example.todoapplication.data.local.TodoItemsDao
 import com.example.todoapplication.data.local.TodoItemsDatabase
 import com.example.todoapplication.data.remote.TodoInterceptorBearer
@@ -98,16 +98,6 @@ object TodoModule {
         ): ConnectivityObserver
     }
 
-//    @Provides
-//    @Singleton
-//    fun providesTodoInterceptorBearer(
-//        preferencesManager: PreferencesManager
-//    ): TodoInterceptorBearer {
-//        return TodoInterceptorBearer(
-//            BuildConfig.AUTH_PASSWORD,
-//            preferencesManager.getCurrentRevision()
-//        )
-//    }
 }
 
 

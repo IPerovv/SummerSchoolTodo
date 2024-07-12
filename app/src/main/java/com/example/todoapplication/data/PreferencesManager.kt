@@ -1,4 +1,4 @@
-package com.example.todoapplication.data.local
+package com.example.todoapplication.data
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,9 +7,9 @@ import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.example.todoapplication.BuildConfig
+import com.example.todoapplication.core.util.getNewRandomId
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -60,7 +60,7 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
     fun getCurrentDeviceId(): String {
         val deviceId = sensitivePreferences.getString("Device-Id", null)
         return if (deviceId == null){
-            val newDeviceId = "device ${com.example.todoapplication.data.local.getNewRandomId()}"
+            val newDeviceId = "device ${getNewRandomId()}"
             sensitivePreferences.edit{putString("Device-Id", newDeviceId)}
             newDeviceId
         } else deviceId

@@ -1,4 +1,4 @@
-package com.example.todoapplication.data.local
+package com.example.todoapplication.core.util
 
 import java.util.UUID
 
