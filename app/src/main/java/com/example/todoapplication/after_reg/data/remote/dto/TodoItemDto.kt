@@ -3,7 +3,6 @@ package com.example.todoapplication.after_reg.data.remote.dto
 import com.example.todoapplication.after_reg.data.local.entity.TodoItemEntity
 import com.example.todoapplication.after_reg.domain.model.ImportanceLevel
 import com.google.gson.annotations.SerializedName
-import java.sql.Timestamp
 import java.util.Date
 
 data class TodoItemDto(
@@ -28,7 +27,7 @@ data class TodoItemDto(
     @SerializedName("files")
     val files: List<String>? = null
 ) {
-    fun toJobEntity(): TodoItemEntity {
+    fun toTodoEntity(): TodoItemEntity {
         return TodoItemEntity(
             id = id,
             text = text,

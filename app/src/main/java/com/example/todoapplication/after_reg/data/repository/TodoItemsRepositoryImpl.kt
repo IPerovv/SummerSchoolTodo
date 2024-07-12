@@ -2,18 +2,21 @@ package com.example.todoapplication.after_reg.data.repository
 
 import android.util.Log
 import com.example.todoapplication.R
-import com.example.todoapplication.after_reg.data.stringProvider.StringProvider
 import com.example.todoapplication.after_reg.data.local.PreferencesManager
 import com.example.todoapplication.after_reg.data.local.TodoItemsDao
 import com.example.todoapplication.after_reg.data.local.entity.TodoItemEntity
 import com.example.todoapplication.after_reg.data.remote.TodoItemsApi
 import com.example.todoapplication.after_reg.data.remote.dto.RequestDto
+import com.example.todoapplication.after_reg.data.remote.dto.RequestSingleDto
+import com.example.todoapplication.after_reg.data.stringProvider.StringProvider
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
 import com.example.todoapplication.core.util.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import retrofit2.HttpException
@@ -41,7 +44,7 @@ class TodoItemsRepositoryImpl(
         runCatching {
             val remoteTodoItems = api.getAllTodoItems()
             dao.clearTodos()
-            dao.updateDatabase(remoteTodoItems.list.map { it.toJobEntity() })
+            dao.updateDatabase(remoteTodoItems.list.map { it.toTodoEntity() })
             preferencesManager.updateCurrentRevision(remoteTodoItems.revision)
 
         }.onFailure {
@@ -85,27 +88,25 @@ class TodoItemsRepositoryImpl(
         }
     }
 
-    override suspend fun addTodoItem(todoItem: TodoItemEntity) {
+    override suspend fun addTodoItem(todoItem: TodoItemEntity){
         dao.addTodoItem(todoItem)
         runCatching {
-            val response = api.addTodoItem(RequestDto(todoItem.toTodoDto()))
-            Log.i("replImpla", response.revision.toString())
+            val response = api.addTodoItem(RequestSingleDto(todoItem.toTodoDto()))
+            preferencesManager.updateCurrentRevision(response.revision)
         }.onFailure {
             Log.e("repImpl", "???${it.message.toString()}")
         }.onSuccess {
-            Log.i("repImpl", "Successfully addedTodo")
+
         }
-        //Тут когда-то появятся уведомления ошибок
     }
 
-    override suspend fun updateTodoItem(todoItem: TodoItemEntity) {
+    override suspend fun updateTodoItem(todoItem: TodoItemEntity)  {
         dao.addTodoItem(todoItem)
         runCatching {
-            val response = api.updateTodoItem(todoItem.id, RequestDto(todoItem.toTodoDto()))
+            val response = api.updateTodoItem(todoItem.id, RequestSingleDto(todoItem.toTodoDto()))
+            preferencesManager.updateCurrentRevision(response.revision)
         }.onFailure {
             Log.i("repImpl", "asssssssssso")
-        }.onSuccess {
-            Log.i("repImpl", "ssssssssssssssssso")
         }
         Log.i("repImpl", "Updated Todo")
         //Тут когда-то появятся уведомления ошибок
@@ -115,13 +116,11 @@ class TodoItemsRepositoryImpl(
         dao.deleteTodoItem(todoItem)
         runCatching {
             val response = api.deleteTodoItem(todoItem.id)
+            preferencesManager.updateCurrentRevision(response.revision)
         }.onFailure {
             Log.e("repImpl", "???${it.message.toString()}")
-        }.onSuccess {
-
         }
         Log.i("repImpl", "{ \" ${todoItem.text} \" was deleted}")
-        //Тут когда-то появятся уведомления ошибок
     }
 
     override suspend fun getTodoItemById(id: String): TodoItem {
@@ -132,7 +131,7 @@ class TodoItemsRepositoryImpl(
         runCatching {
             val remoteTodoItems = api.getAllTodoItems()
             dao.clearTodos()
-            dao.updateDatabase(remoteTodoItems.list.map { it.toJobEntity() })
+            dao.updateDatabase(remoteTodoItems.list.map { it.toTodoEntity() })
             preferencesManager.updateCurrentRevision(remoteTodoItems.revision)
         }.onFailure {
             Log.i("repImpl", "Cant update info due to ${it.message.toString()}")
@@ -141,12 +140,50 @@ class TodoItemsRepositoryImpl(
         }
     }
 
-    //    override fun getAllTodoItemsFromLocalDb(): Flow<List<TodoItem>> = flow {
-//        val todoItems: List<TodoItem> = runBlocking {
-//            dao.getAllTodoItems().map { it.map { item -> item.toTodoItem() } }.first()
-//        }
+    override suspend fun updateDataAfterConnectionLoss(): Flow<List<TodoItem>> = flow {
+        runCatching {
+            val remoteData = api.getAllTodoItems()
+            val remoteTodoItems = remoteData.list.map { it.toTodoEntity() }
+            preferencesManager.updateCurrentRevision(remoteData.revision)
 
-//        emit(todoItems)
-//    }
+            val localTodoItems = dao.getAllTodoItems().first()
 
+            // Create maps of items by their ID for both local and remote items
+            val remoteItemsMap = remoteTodoItems.associateBy { it.id }
+            val localItemsMap = localTodoItems.associateBy { it.id }
+
+            // Create a set of all unique IDs from both local and remote items
+            val allIds = localItemsMap.keys.union(remoteItemsMap.keys)
+
+            // Create a list to store the merged items
+            val mergedItems = mutableListOf<TodoItemEntity>()
+
+            // Iterate through all unique IDs
+            for (id in allIds) {
+                val localItem = localItemsMap[id]
+                val remoteItem = remoteItemsMap[id]
+
+                // Determine which item to keep based on modification date
+                val itemToKeep = when {
+                    localItem == null -> null
+                    remoteItem == null -> localItem // Only exists in local
+                    localItem.modificationDate?.after(remoteItem.modificationDate) == true -> localItem // Local is newer
+                    else -> remoteItem // Remote is newer or they are the same
+                }
+
+                // Add the determined item to the merged items list
+                itemToKeep?.let { mergedItems.add(it) }
+            }
+
+            val afterPatch = api.patchServerInfo(RequestDto(mergedItems.map { it.toTodoDto() }))
+
+            dao.updateDatabase(afterPatch.list.map { it.toTodoEntity() })
+            preferencesManager.updateCurrentRevision(afterPatch.revision)
+
+        }.onFailure {
+            Log.i("repImpl", "Cant merge and update due to ${it.message.toString()}")
+        }.onSuccess {
+
+        }
+    }
 }

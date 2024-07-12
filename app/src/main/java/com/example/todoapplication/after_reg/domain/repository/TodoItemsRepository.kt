@@ -17,4 +17,6 @@ interface TodoItemsRepository {
     suspend fun getTodoItemById(id: String): TodoItem
 
     suspend fun updateData()
+
+    suspend fun updateDataAfterConnectionLoss() : Flow<List<TodoItem>>
 }

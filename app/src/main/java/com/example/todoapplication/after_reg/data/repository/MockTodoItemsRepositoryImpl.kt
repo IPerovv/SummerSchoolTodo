@@ -33,7 +33,7 @@ class MockTodoItemsRepositoryImpl(
 
         runCatching {
             val mockTodo = mock.getAllTodoItems()
-            dao.updateDatabase(mockTodo.list.map { it.toJobEntity() })
+            dao.updateDatabase(mockTodo.list.map { it.toTodoEntity() })
 
         }.onFailure {
             Resource.Error(
@@ -63,7 +63,7 @@ class MockTodoItemsRepositoryImpl(
     override suspend fun updateData(){}
 
     override suspend fun updateTodoItem(todoItem: TodoItemEntity) {
-            TODO()
+        TODO()
     }
 
     override suspend fun deleteTodoItem(todoItem: TodoItemEntity) {
@@ -78,5 +78,9 @@ class MockTodoItemsRepositoryImpl(
 
     override suspend fun getTodoItemById(id: String): TodoItem {
         return dao.getTodoItemById(id).toTodoItem()
+    }
+
+    override suspend fun updateDataAfterConnectionLoss(): Flow<List<TodoItem>> {
+        TODO("Not yet implemented")
     }
 }

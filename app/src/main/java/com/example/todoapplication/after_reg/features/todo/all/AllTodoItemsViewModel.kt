@@ -6,6 +6,7 @@ import com.example.todoapplication.after_reg.data.local.entity.TodoItemEntity
 import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.core.util.Resource
 import com.example.todoapplication.after_reg.domain.use_case.GetAllTodoItemsUseCase
+import com.example.todoapplication.after_reg.domain.use_case.UpdateDataAfterConnectionLossUseCase
 import com.example.todoapplication.after_reg.domain.use_case.UpdateTodoItemUseCase
 import com.example.todoapplication.after_reg.features.connectivity.ConnectivityObserver
 import com.example.todoapplication.after_reg.features.connectivity.NetworkKConnectivityObserver
@@ -25,6 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AllTodoItemsViewModel @Inject constructor(
     private val getAllTodoItemsUseCase: GetAllTodoItemsUseCase,
+    private val updateDataAfterConnectionLossUseCase: UpdateDataAfterConnectionLossUseCase,
     private val updateTodoItemUseCase: UpdateTodoItemUseCase,
     private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
@@ -80,6 +82,17 @@ class AllTodoItemsViewModel @Inject constructor(
     fun updateTodoItem(toDoItem: TodoItem) {
         viewModelScope.launch(Dispatchers.IO) {
             updateTodoItemUseCase(toDoItem.toTodoItemEntity())
+        }
+    }
+
+    fun syncDataAfterConnectionLoss() {
+        viewModelScope.launch(Dispatchers.IO) {
+            updateDataAfterConnectionLossUseCase().collect {
+                _state.value = state.value.copy(
+                    todoItemItems = it,
+                    isLoading = false
+                )
+            }
         }
     }
 

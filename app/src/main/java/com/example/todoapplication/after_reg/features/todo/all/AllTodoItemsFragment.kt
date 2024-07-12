@@ -8,17 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.todoapplication.after_reg.domain.model.TodoItem
 import com.example.todoapplication.after_reg.features.connectivity.ConnectivityObserver
 import com.example.todoapplication.databinding.FragmentAllTodoItemsBinding
 import com.google.android.material.snackbar.Snackbar
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AllTodoItemsFragment : Fragment() {
@@ -27,6 +24,8 @@ class AllTodoItemsFragment : Fragment() {
         get() = _binding!!
 
     private val allTodoItemsViewModel: AllTodoItemsViewModel by viewModels()
+
+    private var connectedFirst = true
 
     private val adapter by lazy {
         JobAdapter(
@@ -100,12 +99,16 @@ class AllTodoItemsFragment : Fragment() {
         allTodoItemsViewModel.connectionFlow.onEach { status ->
             when (status) {
                 ConnectivityObserver.ConnectionStatus.Available -> {
-                    allTodoItemsViewModel.loadAllTodoItems()
-                    Snackbar.make(
-                        binding.root,
-                        "Соединение восстановлено, обновление данных",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    if (connectedFirst) {
+                        connectedFirst = false
+                    } else {
+                        allTodoItemsViewModel.syncDataAfterConnectionLoss()
+                        Snackbar.make(
+                            binding.root,
+                            "Соединение восстановлено, обновление данных",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
                 }
 
                 else ->
