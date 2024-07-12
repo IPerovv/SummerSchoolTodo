@@ -1,4 +1,4 @@
-package com.example.todoapplication.data.stringProvider
+package com.example.todoapplication.domain
 
 interface StringProvider {
     fun getString(resId: Int): String

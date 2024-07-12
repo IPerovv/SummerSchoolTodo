@@ -1,4 +1,4 @@
-package com.example.todoapplication.features.todo.detailed
+package com.example.todoapplication.presentation.detailed
 
 import android.os.Bundle
 import android.view.LayoutInflater

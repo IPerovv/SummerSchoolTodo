@@ -1,4 +1,4 @@
-package com.example.todoapplication.features.todo.all
+package com.example.todoapplication.presentation.all
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,7 +7,7 @@ import com.example.todoapplication.domain.model.TodoItem
 import com.example.todoapplication.domain.use_case.GetAllTodoItemsUseCase
 import com.example.todoapplication.domain.use_case.UpdateDataAfterConnectionLossUseCase
 import com.example.todoapplication.domain.use_case.UpdateTodoItemUseCase
-import com.example.todoapplication.features.connectivity.ConnectivityObserver
+import com.example.todoapplication.domain.ConnectivityObserver
 import com.example.todoapplication.presentation.TodoItemState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

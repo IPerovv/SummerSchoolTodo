@@ -9,11 +9,11 @@ import com.example.todoapplication.data.remote.TodoInterceptorBearer
 import com.example.todoapplication.data.remote.TodoInterceptorOAuth
 import com.example.todoapplication.data.remote.TodoItemsApi
 import com.example.todoapplication.data.repository.TodoItemsRepositoryImpl
-import com.example.todoapplication.data.stringProvider.StringProvider
-import com.example.todoapplication.data.stringProvider.StringProviderImpl
+import com.example.todoapplication.domain.StringProvider
+import com.example.todoapplication.data.StringProviderImpl
 import com.example.todoapplication.domain.repository.TodoItemsRepository
-import com.example.todoapplication.features.connectivity.ConnectivityObserver
-import com.example.todoapplication.features.connectivity.NetworkKConnectivityObserver
+import com.example.todoapplication.domain.ConnectivityObserver
+import com.example.todoapplication.data.NetworkKConnectivityObserver
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package com.example.todoapplication.features.todo.all
+package com.example.todoapplication.presentation.all
 
 import android.view.LayoutInflater
 import android.view.View

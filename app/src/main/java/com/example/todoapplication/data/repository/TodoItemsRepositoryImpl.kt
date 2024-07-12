@@ -9,7 +9,7 @@ import com.example.todoapplication.data.local.entity.TodoItemEntity
 import com.example.todoapplication.data.remote.TodoItemsApi
 import com.example.todoapplication.data.remote.dto.RequestDto
 import com.example.todoapplication.data.remote.dto.RequestSingleDto
-import com.example.todoapplication.data.stringProvider.StringProvider
+import com.example.todoapplication.domain.StringProvider
 import com.example.todoapplication.domain.model.TodoItem
 import com.example.todoapplication.domain.repository.TodoItemsRepository
 import kotlinx.coroutines.flow.Flow

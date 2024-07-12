@@ -11,7 +11,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
-import com.example.todoapplication.data.worker.TodoWorker
+import com.example.todoapplication.data.TodoWorker
 import com.example.todoapplication.domain.use_case.UpdateDataUseCase
 import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit

@@ -1,8 +1,9 @@
-package com.example.todoapplication.features.connectivity
+package com.example.todoapplication.data
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
+import com.example.todoapplication.domain.ConnectivityObserver
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow

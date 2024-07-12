@@ -1,4 +1,4 @@
-package com.example.todoapplication.features.todo.detailed
+package com.example.todoapplication.presentation.detailed
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

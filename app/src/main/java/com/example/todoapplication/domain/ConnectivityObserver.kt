@@ -1,4 +1,4 @@
-package com.example.todoapplication.features.connectivity
+package com.example.todoapplication.domain
 
 import kotlinx.coroutines.flow.Flow
 

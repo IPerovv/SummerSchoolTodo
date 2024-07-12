@@ -1,4 +1,4 @@
-package com.example.todoapplication.features.todo.all
+package com.example.todoapplication.presentation.all
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.todoapplication.databinding.FragmentAllTodoItemsBinding
-import com.example.todoapplication.features.connectivity.ConnectivityObserver
+import com.example.todoapplication.domain.ConnectivityObserver
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job

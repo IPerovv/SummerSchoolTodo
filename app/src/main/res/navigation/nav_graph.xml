@@ -5,7 +5,7 @@
     app:startDestination="@id/allTodoItemsFragment">
     <fragment
         android:id="@+id/allTodoItemsFragment"
-        android:name="com.example.todoapplication.features.todo.all.AllTodoItemsFragment"
+        android:name="com.example.todoapplication.presentation.all.AllTodoItemsFragment"
         android:label="AllTodoItemsFragment">
         <action
             android:id="@+id/action_allTodoItemsFragment_to_composeDetailedTodoItemFragment"
@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/composeDetailedTodoItemFragment"
-        android:name="com.example.todoapplication.features.todo.detailed.ComposeDetailedTodoItemFragment"
+        android:name="com.example.todoapplication.presentation.detailed.ComposeDetailedTodoItemFragment"
         android:label="ComposeDetailedTodoItemFragment" >
         <argument
             android:name="id"
