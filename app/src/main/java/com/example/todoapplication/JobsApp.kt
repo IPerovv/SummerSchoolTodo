@@ -2,7 +2,6 @@ package com.example.todoapplication
 
 import android.app.Application
 import android.content.Context
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -12,8 +11,8 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
-import com.example.todoapplication.after_reg.data.worker.TodoWorker
-import com.example.todoapplication.after_reg.domain.repository.TodoItemsRepository
+import com.example.todoapplication.data.TodoWorker
+import com.example.todoapplication.domain.use_case.UpdateDataUseCase
 import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -36,13 +35,13 @@ class JobsApp : Application(), Configuration.Provider {
     }
 
     class TodoWorkerFactory @Inject constructor(
-        private val todoItemsRepository: TodoItemsRepository
+        private val updateDataUseCase: UpdateDataUseCase
     ): WorkerFactory(){
         override fun createWorker(
             appContext: Context,
             workerClassName: String,
             workerParameters: WorkerParameters
-        ): ListenableWorker = TodoWorker(appContext, workerParameters, todoItemsRepository)
+        ): ListenableWorker = TodoWorker(appContext, workerParameters, updateDataUseCase)
     }
 
     fun initBackgroundTodoWorker() {

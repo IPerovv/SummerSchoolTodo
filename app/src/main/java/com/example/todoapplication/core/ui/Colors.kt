@@ -1,6 +1,5 @@
 package com.example.todoapplication.core.ui
 
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
 val supportSeparatorLight = Color(0x33000000)
