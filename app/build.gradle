@@ -129,5 +129,12 @@ dependencies {
     implementation libs.compose.ui.tooling.preview
     debugImplementation libs.compose.ui.tooling
 
+    //Worker
     implementation libs.androidx.work.runtime.ktx
+
+    //DivKit
+    implementation libs.div.core
+    implementation libs.div
+    implementation libs.div.json
+    implementation libs.picasso
 }
