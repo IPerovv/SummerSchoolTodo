@@ -7,20 +7,29 @@
         "div": {
           "items": [
             {
-              "type": "_template_close",
-              "alignment_horizontal": "right",
+              "type": "image",
+              "tint_color": "#000000",
+              "preload_required": 1,
+              "alignment_horizontal": "left",
               "height": {
                 "type": "fixed",
-                "value": 28
+                "value": 20
               },
               "margins": {
                 "top": 20,
-                "right": 24
+                "left": 20
               },
               "width": {
                 "type": "fixed",
-                "value": 28
-              }
+                "value": 20
+              },
+              "actions": [
+                {
+                  "log_id": "close_screen",
+                  "url": "nav-action://close"
+                }
+              ],
+              "image_url": "https://yastatic.net/s3/home/div/div_fullscreens/cross2.3.png"
             },
             {
               "type": "state",
@@ -30,7 +39,6 @@
                 {
                   "state_id": "checked",
                   "div": {
-
                     "type": "container",
                     "alignment_horizontal": "center",
                     "orientation": "overlap",
@@ -39,13 +47,15 @@
                         "type": "image",
                         "image_url": "https://github.com/IPerovv/SummerSchoolTodo/blob/Part5/app/src/main/res/drawable/divkit_checkbox_border.png?raw=true",
                         "tint_color": "#34C759",
-                        "tint_mode": "source_atop"
+                        "tint_mode": "source_atop",
+                        "preload_required": 1
                       },
                       {
                         "type": "image",
                         "image_url": "https://github.com/IPerovv/SummerSchoolTodo/blob/Part5/app/src/main/res/drawable/divkit_checkbox_check.png?raw=true",
                         "tint_color": "#34C759",
-                        "tint_mode": "source_atop"
+                        "tint_mode": "source_atop",
+                        "preload_required": 1
                       }
                     ],
                     "width": {
@@ -76,7 +86,8 @@
                     "items": [
                       {
                         "type": "image",
-                        "image_url": "https://github.com/IPerovv/SummerSchoolTodo/blob/Part5/app/src/main/res/drawable/divkit_checkbox_border.png?raw=true"
+                        "image_url": "https://github.com/IPerovv/SummerSchoolTodo/blob/Part5/app/src/main/res/drawable/divkit_checkbox_border.png?raw=true",
+                        "preload_required": 1
                       },
                       {
                         "type": "image",
@@ -121,7 +132,10 @@
               "text": "version -part5",
               "alignment_horizontal": "center",
               "alignment_vertical": "bottom",
-              "text_alignment_horizontal": "center"
+              "text_alignment_horizontal": "center",
+              "margins": {
+                "bottom": 20
+              }
             }
           ],
           "background": [
@@ -138,24 +152,5 @@
         }
       }
     ]
-  },
-  "templates": {
-    "_template_close": {
-      "accessibility": {
-        "description": "Закрыть",
-        "mode": "merge",
-        "type": "button"
-      },
-      "actions": [
-        {
-          "log_id": "close_popup",
-          "url": "div-screen://close"
-        }
-      ],
-      "image_url": "https://yastatic.net/s3/home/div/div_fullscreens/cross2.3.png",
-      "tint_color": "#73000000",
-      "type": "image",
-      "preload_required": true
-    }
   }
 }
