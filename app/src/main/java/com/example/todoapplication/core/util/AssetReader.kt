@@ -1,4 +1,4 @@
-package com.example.todoapplication.core.divkit
+package com.example.todoapplication.core.util
 
 import android.content.Context
 import com.yandex.div.core.utils.IOUtils

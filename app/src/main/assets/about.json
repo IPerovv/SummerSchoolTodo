@@ -34,7 +34,7 @@
             {
               "type": "state",
               "id": "check_state",
-              "default_state_id": "checked",
+              "default_state_id": "unchecked",
               "states": [
                 {
                   "state_id": "checked",

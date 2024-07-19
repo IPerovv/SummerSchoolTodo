@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.todoapplication.R
-import com.example.todoapplication.core.divkit.AssetReader
-import com.example.todoapplication.core.divkit.DivViewFactory
+import com.example.todoapplication.core.util.AssetReader
 import com.example.todoapplication.databinding.FragmentAboutAppBinding
 import com.yandex.div.core.Div2Context
 import com.yandex.div.core.DivConfiguration

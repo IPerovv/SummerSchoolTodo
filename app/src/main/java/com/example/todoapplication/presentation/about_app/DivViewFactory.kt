@@ -1,4 +1,4 @@
-package com.example.todoapplication.core.divkit
+package com.example.todoapplication.presentation.about_app
 
 import com.yandex.div.DivDataTag
 import com.yandex.div.core.Div2Context

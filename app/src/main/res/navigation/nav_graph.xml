@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_allTodoItemsFragment_to_aboutAppFragment"
             app:destination="@id/aboutAppFragment" />
+        <action
+            android:id="@+id/action_allTodoItemsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/composeDetailedTodoItemFragment"
@@ -27,5 +30,9 @@
         android:id="@+id/aboutAppFragment"
         android:name="com.example.todoapplication.presentation.about_app.AboutAppFragment"
         android:label="AboutAppFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.todoapplication.presentation.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>

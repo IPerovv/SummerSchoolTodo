@@ -72,6 +72,12 @@ class AllTodoItemsFragment : Fragment() {
                 )
             }
 
+            settingsButton.setOnClickListener {
+                controller.navigate(
+                    AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToSettingsFragment()
+                )
+            }
+
             allTodoItemsFab.setOnClickListener {
                 controller.navigate(
                     AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(
