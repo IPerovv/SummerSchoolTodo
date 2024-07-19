@@ -1,40 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="BasicStyle">
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="LargeTitle" parent="BasicStyle">
-        <item name="android:textSize">32sp</item>
-        <item name="android:lineSpacingExtra">6sp</item>
-        <item name="fontFamily">@font/roboto_medium</item>
-        <item name="android:textColor">@color/label_primary_dark</item>
-    </style>
-
-    <style name="Title" parent="BasicStyle">
-        <item name="android:textSize">20sp</item>
-        <item name="android:lineSpacingExtra">12sp</item>
-        <item name="android:textColor">@color/label_primary_dark</item>
-        <item name="fontFamily">@font/roboto_medium</item>
-    </style>
-
-    <style name="Button" parent="BasicStyle">
-        <item name="android:textSize">14sp</item>
-        <item name="android:lineSpacingExtra">10sp</item>
-    </style>
-
-    <style name="Body" parent="BasicStyle">
-        <item name="android:textSize">16sp</item>
-        <item name="android:lineSpacingExtra">4sp</item>
-        <item name="fontFamily">@font/roboto_regular</item>
-        <item name="android:textColor">@color/label_primary_dark</item>
-    </style>
-
-    <style name="Subhead" parent="BasicStyle">
-        <item name="android:textSize">14sp</item>
-        <item name="android:lineSpacingExtra">6sp</item>
-        <item name="android:textColor">@color/label_secondary_dark</item>
-    </style>
 
     <style name="TODOToolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="android:elevation">8dp</item>

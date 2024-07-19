@@ -9,13 +9,25 @@
         android:label="AllTodoItemsFragment">
         <action
             android:id="@+id/action_allTodoItemsFragment_to_composeDetailedTodoItemFragment"
-            app:destination="@id/composeDetailedTodoItemFragment" />
+            app:destination="@id/composeDetailedTodoItemFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_allTodoItemsFragment_to_aboutAppFragment"
-            app:destination="@id/aboutAppFragment" />
+            app:destination="@id/aboutAppFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_allTodoItemsFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/composeDetailedTodoItemFragment"

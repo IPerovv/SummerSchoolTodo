@@ -12,13 +12,7 @@ class ThemeManager @Inject constructor(
     private val preferencesManager: PreferencesManager
 ) {
     fun getTheme(): Int {
-        val currentTheme = preferencesManager.getCurrentTheme()
-        return if (currentTheme != -1) currentTheme
-        else {
-            val newTheme = AppCompatDelegate.getDefaultNightMode()
-            setTheme(newTheme)
-            newTheme
-        }
+        return preferencesManager.getCurrentTheme()
     }
 
     fun setTheme(newTheme: Int) {

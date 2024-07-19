@@ -16,11 +16,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.todoapplication.data.ExtendedColors
-import com.example.todoapplication.data.LocalExtendedColors
-import com.example.todoapplication.data.PalettePreview
-import com.example.todoapplication.data.darkExtendedColors
-import com.example.todoapplication.data.lightExtendedColors
 
 
 @Composable

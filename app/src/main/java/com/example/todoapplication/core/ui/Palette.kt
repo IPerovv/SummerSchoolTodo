@@ -1,4 +1,4 @@
-package com.example.todoapplication.data
+package com.example.todoapplication.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,35 +19,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.todoapplication.core.ui.AppTheme
-import com.example.todoapplication.core.ui.ExtendedTheme
-import com.example.todoapplication.core.ui.backElevatedDark
-import com.example.todoapplication.core.ui.backElevatedLight
-import com.example.todoapplication.core.ui.backPrimaryDark
-import com.example.todoapplication.core.ui.backPrimaryLight
-import com.example.todoapplication.core.ui.backSecondaryDark
-import com.example.todoapplication.core.ui.backSecondaryLight
-import com.example.todoapplication.core.ui.blue
-import com.example.todoapplication.core.ui.gray
-import com.example.todoapplication.core.ui.grayLightDark
-import com.example.todoapplication.core.ui.grayLightLight
-import com.example.todoapplication.core.ui.green
-import com.example.todoapplication.core.ui.labelDisableDark
-import com.example.todoapplication.core.ui.labelDisableLight
-import com.example.todoapplication.core.ui.labelPrimaryDark
-import com.example.todoapplication.core.ui.labelPrimaryLight
-import com.example.todoapplication.core.ui.labelSecondaryDark
-import com.example.todoapplication.core.ui.labelSecondaryLight
-import com.example.todoapplication.core.ui.labelTertiaryDark
-import com.example.todoapplication.core.ui.labelTertiaryLight
-import com.example.todoapplication.core.ui.paletteBackColor
-import com.example.todoapplication.core.ui.red
-import com.example.todoapplication.core.ui.supportOverlayDark
-import com.example.todoapplication.core.ui.supportOverlayLight
-import com.example.todoapplication.core.ui.supportSeparatorDark
-import com.example.todoapplication.core.ui.supportSeparatorLight
-import com.example.todoapplication.core.ui.white
-import com.example.todoapplication.core.ui.yellow
 
 @Immutable
 data class ExtendedColors(
