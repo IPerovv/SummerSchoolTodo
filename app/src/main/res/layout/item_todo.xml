@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="More info button"
         android:paddingVertical="3dp"
-        android:paddingStart="2dp"
+        android:background="@drawable/button_ripple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/todo_body_tv"
         app:layout_constraintTop_toTopOf="parent"

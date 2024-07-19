@@ -158,7 +158,8 @@ class TodoItemsRepositoryImpl(
                 val itemToKeep = when {
                     localItem == null -> remoteItem
                     remoteItem == null -> localItem // Only exists in local
-                    localItem.modificationDate?.after(remoteItem.modificationDate) == true -> localItem // Local is newer
+                    localItem.modificationDate?.after(remoteItem.modificationDate)
+                            == true -> localItem // Local is newer
                     else -> remoteItem // Remote is newer or they are the same
                 }
 

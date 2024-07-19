@@ -292,7 +292,7 @@ private fun ChoiceImportantTask(
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
-                indication = null,
+                indication = rememberRipple(),
                 onClick = { expanded = true }
             ),
 
