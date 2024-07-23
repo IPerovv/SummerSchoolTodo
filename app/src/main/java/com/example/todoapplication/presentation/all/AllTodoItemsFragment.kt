@@ -66,6 +66,18 @@ class AllTodoItemsFragment : Fragment() {
                 allTodoItemsSr.isRefreshing = false
             }
 
+            aboutAppButton.setOnClickListener {
+                controller.navigate(
+                    AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToAboutAppFragment()
+                )
+            }
+
+            settingsButton.setOnClickListener {
+                controller.navigate(
+                    AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToSettingsFragment()
+                )
+            }
+
             allTodoItemsFab.setOnClickListener {
                 controller.navigate(
                     AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(

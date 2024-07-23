@@ -2,6 +2,8 @@ package com.example.todoapplication
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -11,6 +13,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
+import com.example.todoapplication.core.ui.ThemeManager
 import com.example.todoapplication.data.TodoWorker
 import com.example.todoapplication.domain.use_case.UpdateDataUseCase
 import dagger.hilt.android.HiltAndroidApp
@@ -23,8 +26,12 @@ class JobsApp : Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: TodoWorkerFactory
 
+    @Inject
+    lateinit var themeManager: ThemeManager
+
     override fun onCreate() {
         super.onCreate()
+        setApplicationTheme()
         initBackgroundTodoWorker()
     }
 
@@ -34,9 +41,15 @@ class JobsApp : Application(), Configuration.Provider {
             .build()
     }
 
+    private fun setApplicationTheme() {
+        AppCompatDelegate.setDefaultNightMode(
+            themeManager.getTheme()
+        )
+    }
+
     class TodoWorkerFactory @Inject constructor(
         private val updateDataUseCase: UpdateDataUseCase
-    ): WorkerFactory(){
+    ) : WorkerFactory() {
         override fun createWorker(
             appContext: Context,
             workerClassName: String,

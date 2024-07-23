@@ -13,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
-  Class that used to interact with shared and encrypted shared preferences
+Class that used to interact with shared and encrypted shared preferences
  */
 @Singleton
 class PreferencesManager @Inject constructor(@ApplicationContext context: Context) {
@@ -39,39 +39,49 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
         nonSensitivePreferences.edit { putInt("X-Last-Known-Revision", newRevision).apply() }
     }
 
-    fun getOAuthToken(): String{
+    fun getOAuthToken(): String {
         val token = sensitivePreferences.getString("OAuth-Token", null)
-        return if (token == null){
+        return if (token == null) {
             val newToken = BuildConfig.OAUTH_TOKEN
-            sensitivePreferences.edit{putString("OAuth-Token", newToken)}
+            sensitivePreferences.edit { putString("OAuth-Token", newToken) }
             newToken
         } else token
     }
 
-    fun getBaseUrl(): String{
+    fun getBaseUrl(): String {
         val url = sensitivePreferences.getString("Base-URL", null)
-        return if (url == null){
+        return if (url == null) {
             val newUrl = BuildConfig.BASE_URL
-            sensitivePreferences.edit{putString("Base-URL", newUrl)}
+            sensitivePreferences.edit { putString("Base-URL", newUrl) }
             newUrl
         } else url
     }
 
     fun getCurrentDeviceId(): String {
         val deviceId = sensitivePreferences.getString("Device-Id", null)
-        return if (deviceId == null){
+        return if (deviceId == null) {
             val newDeviceId = "device ${getNewRandomId()}"
-            sensitivePreferences.edit{putString("Device-Id", newDeviceId)}
+            sensitivePreferences.edit { putString("Device-Id", newDeviceId) }
             newDeviceId
         } else deviceId
     }
 
     fun getBearer(): String {
         val bearer = sensitivePreferences.getString("Bearer", null)
-        return if (bearer == null){
+        return if (bearer == null) {
             val newBearer = BuildConfig.AUTH_PASSWORD
-            sensitivePreferences.edit{putString("Bearer", newBearer)}
+            sensitivePreferences.edit { putString("Bearer", newBearer) }
             newBearer
         } else bearer
+    }
+
+    fun updateCurrentTheme(themeCode: Int) {
+        nonSensitivePreferences.edit {
+            putInt("App-Theme", themeCode).apply()
+        }
+    }
+
+    fun getCurrentTheme(): Int {
+        return nonSensitivePreferences.getInt("App-Theme", -1)
     }
 }

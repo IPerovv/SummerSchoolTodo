@@ -9,7 +9,25 @@
         android:label="AllTodoItemsFragment">
         <action
             android:id="@+id/action_allTodoItemsFragment_to_composeDetailedTodoItemFragment"
-            app:destination="@id/composeDetailedTodoItemFragment" />
+            app:destination="@id/composeDetailedTodoItemFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_allTodoItemsFragment_to_aboutAppFragment"
+            app:destination="@id/aboutAppFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_allTodoItemsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/composeDetailedTodoItemFragment"
@@ -20,5 +38,13 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutAppFragment"
+        android:name="com.example.todoapplication.presentation.about_app.AboutAppFragment"
+        android:label="AboutAppFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.todoapplication.presentation.settings.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>
