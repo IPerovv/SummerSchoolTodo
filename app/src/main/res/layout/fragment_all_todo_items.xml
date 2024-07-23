@@ -85,6 +85,7 @@
                     app:tint="?color_blue"
                     android:background="@drawable/button_ripple"
                     android:checked="false"
+                    android:contentDescription="@string/acc_eye_button_description"
                     />
 
                 <ImageButton
@@ -94,7 +95,7 @@
                     android:src="@drawable/info_outline"
                     app:tint="?label_primary"
                     android:background="@drawable/button_ripple"
-                    android:contentDescription="Info about app" />
+                    android:contentDescription="@string/acc_about_app_button_description" />
 
                 <ImageButton
                     android:id="@+id/settings_button"
@@ -102,7 +103,8 @@
                     android:layout_height="50dp"
                     android:src="@drawable/baseline_settings_24"
                     app:tint="?label_primary"
-                    android:background="@drawable/button_ripple"/>
+                    android:background="@drawable/button_ripple"
+                    android:contentDescription="@string/acc_settings_button_description"/>
 
 
             </LinearLayout>

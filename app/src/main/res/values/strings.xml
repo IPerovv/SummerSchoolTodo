@@ -12,4 +12,7 @@
     <string name="http401Error">Неверная авторизация</string>
     <string name="http404Error">Такой элемент на сервере не найден</string>
     <string name="http500Error">Какая-то ошибка сервера</string>
+    <string name="acc_settings_button_description">Настройки</string>
+    <string name="acc_about_app_button_description">о приложении</string>
+    <string name="acc_eye_button_description">Скрыть выполненные дела</string>
 </resources>

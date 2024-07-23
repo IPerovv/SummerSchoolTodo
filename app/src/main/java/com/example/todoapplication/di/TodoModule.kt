@@ -13,7 +13,7 @@ import com.example.todoapplication.domain.StringProvider
 import com.example.todoapplication.data.StringProviderImpl
 import com.example.todoapplication.domain.repository.TodoItemsRepository
 import com.example.todoapplication.domain.ConnectivityObserver
-import com.example.todoapplication.data.NetworkKConnectivityObserver
+import com.example.todoapplication.data.NetworkConnectivityObserver
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -94,7 +94,7 @@ object TodoModule {
     abstract class ConnectivityModule {
         @Binds
         abstract fun bindConnectivityObserver(
-            networkKConnectivityObserver: NetworkKConnectivityObserver
+            networkConnectivityObserver: NetworkConnectivityObserver
         ): ConnectivityObserver
     }
 

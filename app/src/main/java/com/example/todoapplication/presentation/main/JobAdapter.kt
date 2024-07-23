@@ -1,13 +1,16 @@
-package com.example.todoapplication.presentation.all
+package com.example.todoapplication.presentation.main
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapplication.R
 import com.example.todoapplication.databinding.ItemTodoBinding
+import com.example.todoapplication.domain.model.ImportanceLevel
 import com.example.todoapplication.domain.model.TodoItem
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -36,6 +39,31 @@ class JobAdapter(
             binding.todoChb.setOnCheckedChangeListener { _, isChecked ->
                 val updatedItem = todoItem.copy(completed = isChecked)
                 onCheckedChange.invoke(updatedItem)
+            }
+
+            itemView.contentDescription = accMakeDescription(todoItem, dateFormat)
+            ViewCompat.replaceAccessibilityAction(
+                itemView,
+                AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+                "изменить состояние"
+            ) { view, arguments ->
+                binding.todoChb.isChecked = !binding.todoChb.isChecked
+
+                val state = if (binding.todoChb.isChecked) "выполнено" else "не выполнено"
+                itemView.announceForAccessibility("Состояние изменено на $state")
+
+                val updatedItem = todoItem.copy(completed = binding.todoChb.isChecked)
+                onCheckedChange.invoke(updatedItem)
+
+                true
+            }
+            ViewCompat.replaceAccessibilityAction(
+                binding.toDetailedTodoBt,
+                AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+                "перейти"
+            ) { view, arguments ->
+                onClick.invoke(todoItem.id)
+                true
             }
         }
     }
@@ -69,4 +97,15 @@ class JobAdapter(
     }
 
     val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale("ru"))
+}
+
+fun accMakeDescription(todoItem: TodoItem, dateFormat: SimpleDateFormat): String {
+    val accImportanceDescription = when (todoItem.importance) {
+        ImportanceLevel.IMPORTANT -> "Высокая"
+        ImportanceLevel.LOW -> "Низкая"
+        ImportanceLevel.BASIC -> "Нет"
+    }
+    val accDeadlineText =
+        todoItem.deadline?.let { "до ${dateFormat.format(it)}" } ?: "без даты выполнения"
+    return "Дело: ${todoItem.todo}, важность $accImportanceDescription, $accDeadlineText"
 }
