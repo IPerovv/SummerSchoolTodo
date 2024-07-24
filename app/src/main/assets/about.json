@@ -1,6 +1,6 @@
 {
   "card": {
-    "log_id": "about_app_screen",
+    "log_id": "div2_sample_card",
     "states": [
       {
         "state_id": 0,
@@ -29,7 +29,10 @@
                   "url": "nav-action://close"
                 }
               ],
-              "image_url": "https://yastatic.net/s3/home/div/div_fullscreens/cross2.3.png"
+              "image_url": "https://yastatic.net/s3/home/div/div_fullscreens/cross2.3.png",
+              "accessibility": {
+                "description": "Назад"
+              }
             },
             {
               "type": "state",
@@ -66,9 +69,6 @@
                       "type": "fixed",
                       "value": 150
                     },
-                    "margins": {
-                      "top": 150
-                    },
                     "actions": [
                       {
                         "log_id": "set_unchecked",
@@ -103,9 +103,6 @@
                       "type": "fixed",
                       "value": 150
                     },
-                    "margins": {
-                      "top": 150
-                    },
                     "actions": [
                       {
                         "log_id": "set_unchecked",
@@ -114,7 +111,23 @@
                     ]
                   }
                 }
-              ]
+              ],
+              "accessibility": {
+                "mode": "merge",
+                "description": "Лого приложения"
+              },
+              "width": {
+                "type": "wrap_content",
+                "constrained": true
+              },
+              "height": {
+                "constrained": true,
+                "type": "wrap_content"
+              },
+              "margins": {
+                "top": 150
+              },
+              "alignment_horizontal": "center"
             },
             {
               "type": "text",
@@ -125,6 +138,9 @@
               "text_alignment_horizontal": "center",
               "margins": {
                 "top": 300
+              },
+              "accessibility": {
+                "description": "Название приложения todoApplication"
               }
             },
             {
@@ -135,6 +151,37 @@
               "text_alignment_horizontal": "center",
               "margins": {
                 "bottom": 20
+              }
+            },
+            {
+              "type": "text",
+              "text": "О приложении",
+              "font_size": 20,
+              "width": {
+                "type": "wrap_content",
+                "constrained": true
+              },
+              "alignment_horizontal": "center",
+              "alignment_vertical": "top",
+              "margins": {
+                "top": 355
+              }
+            },
+            {
+              "type": "text",
+              "text": "Тут могло бы быть красивое описание приложения, но пока тут пусто",
+              "font_size": 16,
+              "text_alignment_horizontal": "center",
+              "alignment_horizontal": "center",
+              "alignment_vertical": "top",
+              "margins": {
+                "start": 40,
+                "end": 40,
+                "top": 398
+              },
+              "width": {
+                "type": "wrap_content",
+                "constrained": true
               }
             }
           ],
@@ -152,5 +199,6 @@
         }
       }
     ]
-  }
+  },
+  "templates": {}
 }

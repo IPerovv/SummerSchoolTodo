@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.todoapplication.R
 import com.example.todoapplication.databinding.FragmentSettingsBinding
+import com.example.todoapplication.presentation.main.AllTodoItemsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,10 +50,11 @@ class SettingsFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
+        initAccessibility()
     }
 
-    private fun currentCheckedRadioButton(){
-        when (settingsViewModel.getTheme()){
+    private fun currentCheckedRadioButton() {
+        when (settingsViewModel.getTheme()) {
             -1 -> binding.themeSystemRb.isChecked = true
             1 -> binding.themeLightRb.isChecked = true
             2 -> binding.themeDarkRb.isChecked = true
@@ -60,5 +64,42 @@ class SettingsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initAccessibility() {
+
+        ViewCompat.replaceAccessibilityAction(
+            binding.themeLightRb,
+            AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+            "Включить светлую тему"
+        ) { view, arguments ->
+            view.announceForAccessibility("Теперь тема приложения: Светлая")
+            settingsViewModel.setTheme(AppCompatDelegate.MODE_NIGHT_NO)
+            binding.themeLightRb.isChecked = true
+            true
+        }
+
+        ViewCompat.replaceAccessibilityAction(
+            binding.themeDarkRb,
+            AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+            "Включить темную тему"
+        ) { view, arguments ->
+            view.announceForAccessibility("Теперь тема приложения: Темная")
+            settingsViewModel.setTheme(AppCompatDelegate.MODE_NIGHT_YES)
+            binding.themeDarkRb.isChecked = true
+            true
+        }
+
+        ViewCompat.replaceAccessibilityAction(
+            binding.themeSystemRb,
+            AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+            "Включить тему как в системе"
+        ) { view, arguments ->
+            view.announceForAccessibility("Теперь тема приложения: Как в системе")
+            settingsViewModel.setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            binding.themeSystemRb.isChecked = true
+            true
+        }
+
     }
 }
