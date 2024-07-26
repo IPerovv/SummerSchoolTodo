@@ -19,4 +19,5 @@
     <string name="acc_dark_theme_rbt">Темная тема</string>
     <string name="acc_lis_theme_rbt">Как в системе</string>
     <string name="acc_back_btn">Назад</string>
+    <string name="acc_fab">Новое дело</string>
 </resources>

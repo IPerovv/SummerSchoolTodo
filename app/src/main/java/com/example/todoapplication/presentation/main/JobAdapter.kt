@@ -50,7 +50,7 @@ class JobAdapter(
                 binding.todoChb.isChecked = !binding.todoChb.isChecked
 
                 val state = if (binding.todoChb.isChecked) "выполнено" else "не выполнено"
-                itemView.announceForAccessibility("Состояние изменено на $state")
+                itemView.announceForAccessibility("${todoItem.todo}, Состояние изменено на $state")
 
                 val updatedItem = todoItem.copy(completed = binding.todoChb.isChecked)
                 onCheckedChange.invoke(updatedItem)
@@ -107,5 +107,6 @@ fun accMakeDescription(todoItem: TodoItem, dateFormat: SimpleDateFormat): String
     }
     val accDeadlineText =
         todoItem.deadline?.let { "до ${dateFormat.format(it)}" } ?: "без даты выполнения"
-    return "Дело: ${todoItem.todo}, важность $accImportanceDescription, $accDeadlineText"
+    val isChecked = if( todoItem.completed) "Выполнено" else "Не выполнено"
+    return "Дело: ${todoItem.todo}, $isChecked, важность $accImportanceDescription, $accDeadlineText"
 }

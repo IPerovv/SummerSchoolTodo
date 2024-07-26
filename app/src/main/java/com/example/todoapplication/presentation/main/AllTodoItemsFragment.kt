@@ -90,7 +90,6 @@ class AllTodoItemsFragment : Fragment() {
                     )
                 )
             }
-
         }
         subscribeToObservers()
         initAccessibility()
@@ -117,6 +116,19 @@ class AllTodoItemsFragment : Fragment() {
         ) { view, arguments ->
             controller.navigate(
                 AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToAboutAppFragment()
+            )
+            true
+        }
+
+        ViewCompat.replaceAccessibilityAction(
+            binding.allTodoItemsFab,
+            AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+            "Создать новое дело"
+        ) { view, arguments ->
+            controller.navigate(
+                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(
+                    null
+                )
             )
             true
         }

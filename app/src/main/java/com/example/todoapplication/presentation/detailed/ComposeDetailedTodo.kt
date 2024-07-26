@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -48,6 +49,12 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.semantics.toggleableState
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -63,7 +70,8 @@ fun DetailedTodoItemScreen(
     viewModel: DetailedTodoItemViewModel,
     onBack: () -> Unit,
     onSave: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    isDeleteEnabled: Boolean
 ) {
     val importance by viewModel.selectedImportance.collectAsStateWithLifecycle()
     val deadline by viewModel.deadline.collectAsStateWithLifecycle()
@@ -104,7 +112,7 @@ fun DetailedTodoItemScreen(
 
                         Divider(color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f))
 
-                        DeleteSection(onDelete)
+                        DeleteSection(onDelete, isDeleteEnabled)
 
                         Spacer(modifier = Modifier.height(60.dp))
                     }
@@ -134,12 +142,16 @@ private fun TodoTaskTopBar(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = rememberRipple(),
                     onClick = { onNavigateUp() }
-                ),
+                )
+                .semantics {
+                    contentDescription = "Назад. Кнопка"
+                    Role.Button
+                },
             contentAlignment = Alignment.Center,
             content = {
                 Image(
                     painter = painterResource(id = R.drawable.icon_close),
-                    contentDescription = "CLOSE",
+                    contentDescription = "",
                     colorFilter = ColorFilter.tint(ExtendedTheme.colors.labelPrimary),
                 )
             }
@@ -157,10 +169,15 @@ private fun TodoTaskTopBar(
                     onClick = {
                         onAction()
                     }
+
                 )
                 .height(40.dp)
                 .wrapContentSize(align = Alignment.Center)
-                .padding(7.dp),
+                .padding(7.dp)
+                .semantics {
+                    contentDescription = "Сохранить. Кнопка"
+                    Role.Button
+                },
         )
     }
 }
@@ -212,10 +229,27 @@ private fun ChoiceDateTask(
 ) {
     var checkedState by remember { mutableStateOf(deadline != null) }
 
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 18.dp),
+            .padding(horizontal = 16.dp, vertical = 18.dp)
+            .toggleable(
+                value = checkedState,
+                onValueChange = { newState ->
+                    checkedState = newState
+                    if (newState) {
+                        showDatePicker(viewModel, context)
+                    } else {
+                        viewModel.clearDeadline()
+                    }
+                }
+            )
+            .semantics(mergeDescendants = true) {
+                // Provide custom semantics to make the entire row focusable and describe the state
+                stateDescription = if (checkedState) "Дата выполнения $deadline" else "Без даты выполнения"
+            },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -223,23 +257,23 @@ private fun ChoiceDateTask(
             androidx.compose.material3.Text(
                 text = stringResource(id = R.string.make_up_to),
                 color = ExtendedTheme.colors.labelPrimary,
-                style = ExtendedTheme.typography.body
+                style = ExtendedTheme.typography.body,
+                modifier = Modifier.clearAndSetSemantics { }
             )
             Text(
                 text = deadline ?: " ",
                 color = ExtendedTheme.colors.colorBlue,
-                style = ExtendedTheme.typography.subhead
+                style = ExtendedTheme.typography.subhead,
+                modifier = Modifier.clearAndSetSemantics { }
             )
         }
-
-        val context = LocalContext.current
 
         androidx.compose.material3.Switch(
             checked = checkedState,
             onCheckedChange = { newState ->
                 checkedState = newState
                 if (newState) {
-                    showDataPicker(viewModel, context)
+                    showDatePicker(viewModel, context)
                 } else {
                     viewModel.clearDeadline()
                 }
@@ -252,11 +286,12 @@ private fun ChoiceDateTask(
                 checkedTrackColor = Color.Cyan,
                 uncheckedTrackColor = ExtendedTheme.colors.colorGrayLight
             ),
+            modifier = Modifier.clearAndSetSemantics {  }
         )
     }
 }
 
-private fun showDataPicker(
+private fun showDatePicker(
     viewModel: DetailedTodoItemViewModel,
     context: Context,
 ) {
@@ -283,7 +318,7 @@ private fun ChoiceImportantTask(
     val items = listOf(
         stringResource(id = R.string.importance_low),
         stringResource(id = R.string.importance_basic),
-        "!! ${stringResource(id = R.string.importance_high)}"
+        stringResource(id = R.string.importance_high)
     )
 
     Box(
@@ -350,7 +385,7 @@ private fun ChoiceImportantTask(
 @Composable
 fun unwrapImportance(importance: String): String {
     return when (importance) {
-        "important" -> ("!!" + stringResource(id = R.string.importance_high))
+        "important" -> (stringResource(id = R.string.importance_high))
         "basic" -> stringResource(id = R.string.importance_basic)
         "low" -> stringResource(id = R.string.importance_low)
         else -> stringResource(id = R.string.importance_basic)
@@ -358,20 +393,33 @@ fun unwrapImportance(importance: String): String {
 }
 
 @Composable
-fun DeleteSection(onDelete: () -> Unit) {
+fun DeleteSection(onDelete: () -> Unit, isEnabled: Boolean) {
+    val color =
+        if (isEnabled) Color.Red else Color.Gray
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onDelete() }
+            .clickable(enabled = isEnabled) { onDelete() }
             .padding(16.dp)
+            .semantics(mergeDescendants = true) {
+                Role.Button
+                contentDescription = "Удалить. Кнопка"
+            }
     ) {
         Icon(
             Icons.Default.Delete,
-            contentDescription = "Delete",
-            tint = Color.Red
+            contentDescription = null,
+            tint = color
         )
-        Spacer(modifier = Modifier.width(12.dp))
-        Text("Удалить", color = Color.Red)
+        Spacer(
+            modifier = Modifier
+                .width(12.dp)
+        )
+        Text(
+            text = "Удалить",
+            color = color,
+            modifier = Modifier.clearAndSetSemantics {  }
+        )
     }
 }
 
