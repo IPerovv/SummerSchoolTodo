@@ -117,11 +117,9 @@
                 "description": "Лого приложения"
               },
               "width": {
-                "type": "wrap_content",
-                "constrained": true
+                "type": "wrap_content"
               },
               "height": {
-                "constrained": true,
                 "type": "wrap_content"
               },
               "margins": {
@@ -133,7 +131,7 @@
               "type": "text",
               "text": "TodoApplication",
               "font_size": 20,
-              "font_weight": "medium",
+              "font_weight": "bold",
               "alignment_horizontal": "center",
               "text_alignment_horizontal": "center",
               "margins": {
@@ -144,6 +142,54 @@
               }
             },
             {
+              "type": "container",
+              "items": [
+                {
+                  "type": "text",
+                  "text": "О приложении",
+                  "font_size": 20,
+                  "alignment_horizontal": "center",
+                  "font_weight": "medium",
+                  "alignment_vertical": "top",
+                  "text_alignment_horizontal": "center",
+                  "accessibility": {
+                    "mode": "exclude",
+                    "type": "none"
+                  }
+                },
+                {
+                  "type": "text",
+                  "text": "Тут могло бы быть красивое описание приложения, но пока тут пусто",
+                  "font_size": 16,
+                  "text_alignment_horizontal": "center",
+                  "alignment_horizontal": "center",
+                  "alignment_vertical": "top",
+                  "margins": {
+                    "start": 40,
+                    "end": 40,
+                    "top": 10
+                  },
+                  "accessibility": {
+                    "mode": "exclude",
+                    "type": "none"
+                  }
+                }
+
+              ],
+              "alignment_horizontal": "center",
+              "alignment_vertical": "top",
+              "width": {
+                "type": "match_parent"
+              },
+              "margins": {
+                "top": 355
+              },
+              "accessibility": {
+                "mode": "merge",
+                "description": "О приложении: Тут могло бы быть красивое описание приложения, но пока тут пусто"
+              }
+            },
+            {
               "type": "text",
               "text": "version -part5",
               "alignment_horizontal": "center",
@@ -151,37 +197,6 @@
               "text_alignment_horizontal": "center",
               "margins": {
                 "bottom": 20
-              }
-            },
-            {
-              "type": "text",
-              "text": "О приложении",
-              "font_size": 20,
-              "width": {
-                "type": "wrap_content",
-                "constrained": true
-              },
-              "alignment_horizontal": "center",
-              "alignment_vertical": "top",
-              "margins": {
-                "top": 355
-              }
-            },
-            {
-              "type": "text",
-              "text": "Тут могло бы быть красивое описание приложения, но пока тут пусто",
-              "font_size": 16,
-              "text_alignment_horizontal": "center",
-              "alignment_horizontal": "center",
-              "alignment_vertical": "top",
-              "margins": {
-                "start": 40,
-                "end": 40,
-                "top": 398
-              },
-              "width": {
-                "type": "wrap_content",
-                "constrained": true
               }
             }
           ],
