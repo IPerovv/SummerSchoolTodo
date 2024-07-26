@@ -185,10 +185,13 @@ private fun TodoTaskTopBar(
 
 @Composable
 private fun TextSection(todoBody: String, viewModel: DetailedTodoItemViewModel) {
+    val context = LocalContext.current
+
     androidx.compose.material3.Card(
         modifier = Modifier
             .padding(horizontal = 15.dp, vertical = 12.dp)
-            .wrapContentSize(),
+            .wrapContentSize()
+            .semantics(mergeDescendants = true) {  },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             containerColor = ExtendedTheme.colors.backSecondary,
@@ -198,6 +201,12 @@ private fun TextSection(todoBody: String, viewModel: DetailedTodoItemViewModel) 
             defaultElevation = 6.dp
         )
     ) {
+        val customDescription = if (todoBody.isEmpty()) {
+            "Введите описание дела"
+        } else {
+            todoBody
+        }
+
         OutlinedTextField(
             value = todoBody,
             onValueChange = { newInputText: String ->
@@ -205,6 +214,7 @@ private fun TextSection(todoBody: String, viewModel: DetailedTodoItemViewModel) 
             },
             placeholder = {
                 Text(
+                    modifier = Modifier.clearAndSetSemantics {  },
                     text = stringResource(id = R.string.edit_text_hint),
                     color = ExtendedTheme.colors.labelSecondary,
                     style = ExtendedTheme.typography.body
@@ -217,7 +227,10 @@ private fun TextSection(todoBody: String, viewModel: DetailedTodoItemViewModel) 
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .defaultMinSize(minHeight = 120.dp),
+                .defaultMinSize(minHeight = 120.dp)
+                .semantics {
+                    contentDescription = customDescription
+                },
         )
     }
 }
