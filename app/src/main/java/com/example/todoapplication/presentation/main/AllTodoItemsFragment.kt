@@ -1,13 +1,18 @@
-package com.example.todoapplication.presentation.all
+package com.example.todoapplication.presentation.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityNodeInfo
+import androidx.core.view.ViewCompat
+import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+import androidx.core.view.accessibility.AccessibilityViewCommand
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.todoapplication.R
 import com.example.todoapplication.databinding.FragmentAllTodoItemsBinding
 import com.example.todoapplication.domain.ConnectivityObserver
 import com.google.android.material.snackbar.Snackbar
@@ -85,9 +90,48 @@ class AllTodoItemsFragment : Fragment() {
                     )
                 )
             }
-
         }
         subscribeToObservers()
+        initAccessibility()
+    }
+
+
+    private fun initAccessibility() {
+        val controller = findNavController()
+        ViewCompat.replaceAccessibilityAction(
+            binding.settingsButton,
+            AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+            "перейти в настройки"
+        ) { view, arguments ->
+            controller.navigate(
+                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToSettingsFragment()
+            )
+            true
+        }
+
+        ViewCompat.replaceAccessibilityAction(
+            binding.aboutAppButton,
+            AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+            "посмотреть информацию о приложении"
+        ) { view, arguments ->
+            controller.navigate(
+                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToAboutAppFragment()
+            )
+            true
+        }
+
+        ViewCompat.replaceAccessibilityAction(
+            binding.allTodoItemsFab,
+            AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK,
+            "Создать новое дело"
+        ) { view, arguments ->
+            controller.navigate(
+                AllTodoItemsFragmentDirections.actionAllTodoItemsFragmentToComposeDetailedTodoItemFragment(
+                    null
+                )
+            )
+            true
+        }
     }
 
     private fun subscribeToObservers() {

@@ -13,6 +13,7 @@
         android:paddingHorizontal="16dp"
         android:src="@drawable/icon_close"
         android:tint="?label_primary"
+        android:contentDescription="@string/acc_back_btn"
         />
 
 
@@ -46,21 +47,24 @@
                 android:layout_gravity="center"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:buttonTint="@drawable/color_btn_radio" />
+                android:buttonTint="@drawable/color_btn_radio"
+                android:contentDescription="@string/acc_light_theme_rbt"/>
 
             <RadioButton
                 android:id="@+id/theme_dark_rb"
                 style="@style/RadioButtonDarkModeStyle"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:buttonTint="@drawable/color_btn_radio" />
+                android:buttonTint="@drawable/color_btn_radio"
+                android:contentDescription="@string/acc_dark_theme_rbt"/>
 
             <RadioButton
                 android:id="@+id/theme_system_rb"
                 style="@style/RadioButtonSysModeStyle"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:buttonTint="@drawable/color_btn_radio" />
+                android:buttonTint="@drawable/color_btn_radio"
+                android:contentDescription="@string/acc_lis_theme_rbt"/>
 
         </RadioGroup>
 

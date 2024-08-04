@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class that observes connectivity status
  */
 @Singleton
-class NetworkKConnectivityObserver @Inject constructor(
+class NetworkConnectivityObserver @Inject constructor(
     @ApplicationContext context: Context
 ) : ConnectivityObserver {
     private val connectivityManager =

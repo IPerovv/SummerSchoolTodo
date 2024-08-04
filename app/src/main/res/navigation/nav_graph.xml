@@ -5,7 +5,7 @@
     app:startDestination="@id/allTodoItemsFragment">
     <fragment
         android:id="@+id/allTodoItemsFragment"
-        android:name="com.example.todoapplication.presentation.all.AllTodoItemsFragment"
+        android:name="com.example.todoapplication.presentation.main.AllTodoItemsFragment"
         android:label="AllTodoItemsFragment">
         <action
             android:id="@+id/action_allTodoItemsFragment_to_composeDetailedTodoItemFragment"

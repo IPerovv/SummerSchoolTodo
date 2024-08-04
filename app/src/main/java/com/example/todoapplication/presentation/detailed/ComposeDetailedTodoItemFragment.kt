@@ -54,7 +54,8 @@ class ComposeDetailedTodoItemFragment : Fragment() {
                                 findNavController().popBackStack()
                             }
                         }
-                    }
+                    },
+                    isDeleteEnabled = args.id != null
                 )
             }
         }
